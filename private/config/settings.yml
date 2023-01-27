@@ -8,16 +8,16 @@ public:
     # audio
     autoJoin: true
     # Disables the listen only option in audio modal.
-    listenOnlyMode: true
+    listenOnlyMode: false
     forceListenOnly: false
     # Skips the echo test when connecting with microphone.
-    skipCheck: false
+    skipCheck: true
     # Skips the echo test when connecting with microphone right after user
     # joins the room the first time. Subsequent joins to microphone won't
     # have echo test skipped, for example if user leaves and joins the mic
     # again or reloading page and joining mic again.
     # This setting won't have effect if skipCheck = true
-    skipCheckOnJoin: false
+    skipCheckOnJoin: true
     #
     # Allow users to change microphone/speaker dynamically
     # The device is changed immediately, without the need to rejoin
@@ -26,26 +26,26 @@ public:
     # "media.setsinkid.enabled" to make it work properly
     # enableDynamicAudioDeviceSelection: true
     #
-    clientTitle: BigBlueButton
-    appName: BigBlueButton HTML5 Client
+    clientTitle: EduSity
+    appName: EduSity
     bbbServerVersion: HTML5_FULL_BBB_VERSION
-    displayBbbServerVersion: true
-    copyright: '©2023 BigBlueButton Inc.'
-    html5ClientBuild: HTML5_CLIENT_VERSION
+    displayBbbServerVersion: false
+    copyright: "©2023 EduSity"
+    html5ClientBuild: EduSity v0.2
     helpLink: https://bigbluebutton.org/html5/
     lockOnJoin: true
-    cdn: ''
-    basename: '/html5client'
+    cdn: ""
+    basename: "/html5client"
     # the base location of the BBB API. If you use a cluster setup with a load
     # balancer which hides the individual nodes, then this should be
     # https://bbb-host/bigbluebutton
     # If you run a traditional setup of multiple nodes behind scalelite and the
     # users see the hostnames of the individual nodes, you can leave this at the
     # default setting
-    bbbWebBase: '/bigbluebutton'
+    bbbWebBase: "/bigbluebutton"
     # If you run a cluster setup with a load balancer which hides the individual
     # nodes, then this should be set to https://bbb-host/learning-analytics-dashboard
-    learningDashboardBase: '/learning-analytics-dashboard'
+    learningDashboardBase: "/learning-analytics-dashboard"
     # Use https URL of CSS file. Example: https://docs.bigbluebutton.org/admin/customize.html#examples
     customStyleUrl: null
     askForFeedbackOnLogout: false
@@ -65,7 +65,7 @@ public:
     enableTalkingIndicator: true
     mirrorOwnWebcam: false
     viewersInWebcam: 8
-    ipv4FallbackDomain: ''
+    ipv4FallbackDomain: ""
     allowLogout: true
     allowFullscreen: true
     preloadNextSlides: 2
@@ -111,13 +111,6 @@ public:
     enableNetworkStats: true
     # Enable the button to allow users to copy network stats to clipboard
     enableCopyNetworkStatsButton: true
-    # where should client settings be stored? if you run a single BBB server or
-    # a cluster with a reverse proxy in front of it, you may set this to 'local'
-    # See https://docs.bigbluebutton.org/admin/clusterproxy.html
-    # allowed values:
-    # 'session' -> settings are stored in browser sessionStorage
-    # 'local' -> settings are stored in browser localStorage
-    userSettingsStorage: session
     defaultSettings:
       application:
         animations: true
@@ -206,7 +199,7 @@ public:
     branding:
       displayBrandingArea: true
     connectionTimeout: 60000
-    showHelpButton: true
+    showHelpButton: false
     effectiveConnection:
       - critical
       - danger
@@ -219,7 +212,7 @@ public:
   externalVideoPlayer:
     enabled: true
   kurento:
-    wsUrl: HOST
+    wsUrl: wss://dev.asyncweb.io/bbb-webrtc-sfu
     # Valid for video-provider. Time (ms) before its WS connection times out
     # and tries to reconnect.
     wsConnectionTimeout: 4000
@@ -450,9 +443,9 @@ public:
     enabled: true
     id: captions
     dictation: false
-    background: '#000000'
+    background: "#000000"
     font:
-      color: '#ffffff'
+      color: "#ffffff"
       family: Calibri
       size: 24px
     lines: 2
@@ -463,7 +456,7 @@ public:
     timeBetweenFetchs: 1000
     enableSaveAndCopyPublicChat: true
     bufferChatInsertsMs: 0
-    startClosed: false
+    startClosed: true
     min_message_length: 1
     max_message_length: 5000
     grouping_messages_window: 10000
@@ -488,8 +481,8 @@ public:
     id: notes
   layout:
     autoSwapLayout: false
-    hidePresentation: false
-    showParticipantsOnLogin: true
+    hidePresentation: true
+    showParticipantsOnLogin: false
   pads:
     url: ETHERPAD_HOST
     cookie:
@@ -531,22 +524,22 @@ public:
         - name: sipjs
           #
           # The bridge file path , relative to /imports/api/audio/client
-          path: 'bridge/sip'
+          path: "bridge/sip"
         - name: kurento
-          path: 'bridge/kurento'
+          path: "bridge/kurento"
         - name: fullaudio
-          path: 'bridge/FullAudioBridge'
-    stunTurnServersFetchAddress: '/bigbluebutton/api/stuns'
+          path: "bridge/FullAudioBridge"
+    stunTurnServersFetchAddress: "/bigbluebutton/api/stuns"
     cacheStunTurnServers: true
-    fallbackStunServer: ''
+    fallbackStunServer: ""
     # Forces relay usage on all browsers, environments and media modules.
     # If true, supersedes public.kurento.forceRelayOnFirefox
     forceRelay: false
-    mediaTag: '#remote-media'
+    mediaTag: "#remote-media"
     callTransferTimeout: 5000
     callHangupTimeout: 2000
     callHangupMaximumRetries: 10
-    echoTestNumber: 'echo'
+    echoTestNumber: "echo"
     listenOnlyCallTimeout: 25000
     # Experimental. True is the canonical behavior. Flip to false to reverse
     # the negotiation flow for LO subscribers.
@@ -564,11 +557,11 @@ public:
     # Number of reconnection attempts of the signaling websocket, before
     # showing to the user there's an audio error.
     audioReconnectionAttempts: 3
-    sipjsHackViaWs: false
+    sipjsHackViaWs: true
     # the fqdn of this host.
     # If you run a traditional setup of multiple nodes behind scalelite and the users see the hostnames of the
     # individual nodes, you can leave this at the default setting
-    sip_ws_host: ''
+    sip_ws_host: ""
     # Mute/umute toggle throttle time
     toggleMuteThrottleTime: 300
     #Websocket keepAlive interval (seconds). You may set this to prevent
@@ -582,7 +575,7 @@ public:
     #Trace sip/audio messages in browser. If not set, default value is false.
     traceSip: false
     # SDP semantics: plan-b|unified-plan
-    sdpSemantics: 'unified-plan'
+    sdpSemantics: "unified-plan"
   stats:
     enabled: true
     interval: 10000
@@ -613,7 +606,7 @@ public:
     panZoomThrottle: 32
     restoreOnUpdate: false
     oldMinimizeButton: false
-    uploadEndpoint: '/bigbluebutton/presentation/upload'
+    uploadEndpoint: "/bigbluebutton/presentation/upload"
     fileUploadConstraintsHint: false
     # mirroredFromBBBCore are values controlled in bbb-web properties file. We include a copy here for notification purposes
     mirroredFromBBBCore:
@@ -679,29 +672,29 @@ public:
       multiUserPenOnly: false
       colors:
         - label: black
-          value: '#000000'
+          value: "#000000"
         - label: white
-          value: '#ffffff'
+          value: "#ffffff"
         - label: red
-          value: '#ff0000'
+          value: "#ff0000"
         - label: orange
-          value: '#ff8800'
+          value: "#ff8800"
         - label: eletricLime
-          value: '#ccff00'
+          value: "#ccff00"
         - label: Lime
-          value: '#00ff00'
+          value: "#00ff00"
         - label: Cyan
-          value: '#00ffff'
+          value: "#00ffff"
         - label: dodgerBlue
-          value: '#0088ff'
+          value: "#0088ff"
         - label: blue
-          value: '#0000ff'
+          value: "#0000ff"
         - label: violet
-          value: '#8800ff'
+          value: "#8800ff"
         - label: magenta
-          value: '#ff00ff'
+          value: "#ff00ff"
         - label: silver
-          value: '#c0c0c0'
+          value: "#c0c0c0"
       thickness:
         - value: 14
         - value: 12
@@ -762,7 +755,7 @@ public:
       method: POST
       throttleInterval: 400
       flushOnClose: true
-      logTag: ''
+      logTag: ""
   virtualBackgrounds:
     enabled: true
     storedOnBBB: true
@@ -783,7 +776,7 @@ private:
     loadSlidesFromHttpAlways: false
   redis:
     host: 127.0.0.1
-    port: '6379'
+    port: "6379"
     timeout: 5000
     password: null
     debug: false
@@ -841,7 +834,7 @@ private:
   prometheus:
     enabled: false
     # Metrics endpoint path
-    path: '/metrics'
+    path: "/metrics"
     # Whether default metrics for Node.js processes should be exported
     collectDefaultMetrics: false
     # Whether redis metrics should be exported

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import Resizable from 're-resizable';
-import { ACTIONS, PANELS } from '../layout/enums';
-import ChatContainer from '/imports/ui/components/chat/container';
-import NotesContainer from '/imports/ui/components/notes/container';
-import PollContainer from '/imports/ui/components/poll/container';
-import CaptionsContainer from '/imports/ui/components/captions/container';
-import BreakoutRoomContainer from '/imports/ui/components/breakout-room/container';
-import WaitingUsersPanel from '/imports/ui/components/waiting-users/container';
-import Styled from './styles';
-import ErrorBoundary from '/imports/ui/components/common/error-boundary/component';
-import FallbackView from '/imports/ui/components/common/fallback-errors/fallback-view/component';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import Resizable from "re-resizable";
+import Drawer from "@mui/material/Drawer";
+import { ACTIONS, PANELS } from "../layout/enums";
+import ChatContainer from "/imports/ui/components/chat/container";
+import NotesContainer from "/imports/ui/components/notes/container";
+import PollContainer from "/imports/ui/components/poll/container";
+import CaptionsContainer from "/imports/ui/components/captions/container";
+import BreakoutRoomContainer from "/imports/ui/components/breakout-room/container";
+import WaitingUsersPanel from "/imports/ui/components/waiting-users/container";
+import Styled from "./styles";
+import ErrorBoundary from "/imports/ui/components/common/error-boundary/component";
+import FallbackView from "/imports/ui/components/common/fallback-errors/fallback-view/component";
 
 const propTypes = {
   top: PropTypes.number.isRequired,
@@ -48,6 +49,7 @@ const SidebarContent = (props) => {
     contextDispatch,
     sidebarContentPanel,
     amIPresenter,
+    layoutContextDispatch,
   } = props;
 
   const [resizableWidth, setResizableWidth] = useState(width);
@@ -63,8 +65,7 @@ const SidebarContent = (props) => {
     }
   }, [width, height]);
 
-  useEffect(() => {
-  }, [resizeStartWidth, resizeStartHeight]);
+  useEffect(() => {}, [resizeStartWidth, resizeStartHeight]);
 
   const setSidebarContentSize = (dWidth, dHeight) => {
     const newWidth = resizeStartWidth + dWidth;
@@ -84,67 +85,76 @@ const SidebarContent = (props) => {
     });
   };
 
-  const smallSidebar = width < (maxWidth / 2);
-  const pollDisplay = sidebarContentPanel === PANELS.POLL ? 'inherit' : 'none';
+  const smallSidebar = width < maxWidth / 2;
+  const pollDisplay = sidebarContentPanel === PANELS.POLL ? "inherit" : "none";
+
+  const onCloseChat = () => {
+    props.handleChatState(false);
+
+    contextDispatch({
+      type: ACTIONS.SET_SIDEBAR_CONTENT_IS_OPEN,
+      value: false,
+    });
+    contextDispatch({
+      type: ACTIONS.SET_SIDEBAR_NAVIGATION_IS_OPEN,
+      value: false,
+    });
+    contextDispatch({
+      type: ACTIONS.SET_SIDEBAR_CONTENT_PANEL,
+      value: PANELS.NONE,
+    });
+    contextDispatch({
+      type: ACTIONS.SET_SIDEBAR_NAVIGATION_PANEL,
+      value: PANELS.NONE,
+    });
+
+    contextDispatch({
+      type: ACTIONS.SET_ID_CHAT_OPEN,
+      value: "",
+    });
+  };
 
   return (
-    <Resizable
-      minWidth={minWidth}
-      maxWidth={maxWidth}
-      minHeight={minHeight}
-      maxHeight={maxHeight}
-      size={{
-        width,
-        height,
-      }}
-      enable={{
-        top: isResizable && resizableEdge.top,
-        left: isResizable && resizableEdge.left,
-        bottom: isResizable && resizableEdge.bottom,
-        right: isResizable && resizableEdge.right,
-      }}
-      handleWrapperClass="resizeSidebarContentWrapper"
-      onResizeStart={() => {
-        setIsResizing(true);
-        setResizeStartWidth(resizableWidth);
-        setResizeStartHeight(resizableHeight);
-      }}
-      onResize={(...[, , , delta]) => setSidebarContentSize(delta.width, delta.height)}
-      onResizeStop={() => {
-        setIsResizing(false);
-        setResizeStartWidth(0);
-        setResizeStartHeight(0);
-      }}
-      style={{
-        position: 'absolute',
-        top,
-        left,
-        right,
-        zIndex,
-        width,
-        height,
-      }}
-      handleStyles={{
-        left: { height: '100vh' },
-        right: { height: '100vh' },
-      }}
-    >
-      {sidebarContentPanel === PANELS.CHAT
-      && (
-      <ErrorBoundary
-        Fallback={FallbackView}
-      >
-        <ChatContainer width={width}/>
-      </ErrorBoundary>
-      )}
-      {sidebarContentPanel === PANELS.SHARED_NOTES && <NotesContainer />}
-      {sidebarContentPanel === PANELS.CAPTIONS && <CaptionsContainer />}
-      {sidebarContentPanel === PANELS.BREAKOUT && <BreakoutRoomContainer />}
-      {sidebarContentPanel === PANELS.WAITING_USERS && <WaitingUsersPanel />}
-      <Styled.Poll style={{ minWidth, top: '0', display: pollDisplay }} id="pollPanel">
-        <PollContainer smallSidebar={smallSidebar} amIPresenter={amIPresenter} />
-      </Styled.Poll>
-    </Resizable>
+    <>
+      <style>
+        {`
+
+    @media only screen and (max-width: 650px) {
+        .chat-list {
+        height: calc(100% - 100px) !important;
+        z-index: 0  !important;
+
+      }
+    }
+  `}
+      </style>
+      <Drawer anchor="right" open={props.isChatOpened} onClose={onCloseChat}>
+        {sidebarContentPanel === PANELS.CHAT && (
+          <ErrorBoundary Fallback={FallbackView}>
+            <ChatContainer
+              width={width}
+              handleChatState={props.handleChatState}
+              handleUserListState={props.handleUserListState}
+              isChatOpened={props.isChatOpened}
+              isUserListOpned={props.isUserListOpned}
+            />
+          </ErrorBoundary>
+        )}
+        {sidebarContentPanel === PANELS.SHARED_NOTES && <NotesContainer />}
+        {sidebarContentPanel === PANELS.CAPTIONS && <CaptionsContainer />}
+        {sidebarContentPanel === PANELS.BREAKOUT && <BreakoutRoomContainer />}
+        {sidebarContentPanel === PANELS.WAITING_USERS && <WaitingUsersPanel />}
+        <Styled.Poll
+          style={{ minWidth, top: "0", display: pollDisplay }}
+          id="pollPanel"
+        >
+          <PollContainer
+            smallSidebar={smallSidebar}
+            amIPresenter={amIPresenter}
+          />
+        </Styled.Poll>
+      </Drawer>
+    </>
   );
 };
 

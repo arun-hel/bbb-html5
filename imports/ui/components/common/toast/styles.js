@@ -1,12 +1,12 @@
-import styled from 'styled-components';
-import { ToastContainer as Toastify } from 'react-toastify';
-import Icon from '/imports/ui/components/common/icon/component';
+import styled from "styled-components";
+import { ToastContainer as Toastify } from "react-toastify";
+import Icon from "/imports/ui/components/common/icon/component";
 import {
   fontSizeSmallest,
   fontSizeSmaller,
   fontSizeSmall,
   lineHeightComputed,
-} from '/imports/ui/stylesheets/styled-components/typography';
+} from "/imports/ui/stylesheets/styled-components/typography";
 import {
   colorGrayDark,
   toastDefaultColor,
@@ -20,7 +20,7 @@ import {
   toastWarningColor,
   toastWarningBg,
   colorGrayLighter,
-} from '/imports/ui/stylesheets/styled-components/palette';
+} from "/imports/ui/stylesheets/styled-components/palette";
 import {
   toastOffsetSm,
   smPaddingX,
@@ -28,36 +28,38 @@ import {
   toastIconMd,
   toastIconSm,
   jumboPaddingY,
-} from '/imports/ui/stylesheets/styled-components/general';
-import { smallOnly } from '/imports/ui/stylesheets/styled-components/breakpoints';
+} from "/imports/ui/stylesheets/styled-components/general";
+import { smallOnly } from "/imports/ui/stylesheets/styled-components/breakpoints";
 
 const CloseIcon = styled(Icon)`
   background: transparent;
   outline: none;
   border: none;
   cursor: pointer;
-  opacity: .5;
+  opacity: 0.5;
   font-size: ${fontSizeSmallest};
   color: ${colorGrayDark};
   line-height: 0;
   position: relative;
   font-size: 70%;
   left: ${toastOffsetSm};
-  
+
   [dir="rtl"] & {
     left: auto;
     right: ${toastOffsetSm};
   }
 
-  ${({ animations }) => animations && `
+  ${({ animations }) =>
+    animations &&
+    `
     transition: .3s ease;
   `}
 
   &:before {
-    margin: inherit inherit inherit -.4rem;
+    margin: inherit inherit inherit -0.4rem;
 
     [dir="rtl"] & {
-      margin: inherit -.4rem inherit inherit;
+      margin: inherit -0.4rem inherit inherit;
     }
   }
 
@@ -77,7 +79,9 @@ const ToastContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  ${({ small }) => small && `
+  ${({ small }) =>
+    small &&
+    `
     background-color: inherit;
   `}
 `;
@@ -91,7 +95,7 @@ const ToastIcon = styled.div`
   position: relative;
   flex-shrink: 0;
 
-  [dir="rtl"]  & {
+  [dir="rtl"] & {
     margin: 0 0 auto ${smPaddingX};
   }
 
@@ -103,7 +107,9 @@ const ToastIcon = styled.div`
     width: 100%;
   }
 
-  ${({ small }) => small && `
+  ${({ small }) =>
+    small &&
+    `
     width: ${toastIconSm};
     height: ${toastIconSm};
     & > i {
@@ -119,7 +125,9 @@ const ToastMessage = styled.div`
   max-height: 15vh;
   overflow: auto;
 
-  ${({ small }) => small && `
+  ${({ small }) =>
+    small &&
+    `
     font-size: 80%;
   `}
 `;
@@ -133,42 +141,52 @@ const Separator = styled.div`
   width: 100%;
   height: ${borderSizeSmall};
   background-color: ${colorGrayLighter};
-  margin-top: calc(${lineHeightComputed} * .5);
-  margin-bottom: calc(${lineHeightComputed} * .5);
+  margin-top: calc(${lineHeightComputed} * 0.5);
+  margin-bottom: calc(${lineHeightComputed} * 0.5);
 `;
 
 const Toast = styled.div`
   display: flex;
 
-  ${({ type }) => type === 'default' && `
+  ${({ type }) =>
+    type === "default" &&
+    `
     & .toastIcon {
       color: ${toastDefaultColor};
       background-color: ${toastDefaultBg};
     }
   `}
 
-  ${({ type }) => type === 'error' && `
+  ${({ type }) =>
+    type === "error" &&
+    `
     & .toastIcon {
       color: ${toastErrorColor};
       background-color: ${toastErrorBg};
     }
   `}
 
-  ${({ type }) => type === 'info' && `
+  ${({ type }) =>
+    type === "info" &&
+    `
     & .toastIcon {
       color: ${toastInfoColor};
       background-color: ${toastInfoBg};
     }
   `}
 
-  ${({ type }) => type === 'success' && `
+  ${({ type }) =>
+    type === "success" &&
+    `
     & .toastIcon {
       color: ${toastSuccessColor};
       background-color: ${toastSuccessBg};
     }
   `}
 
-  ${({ type }) => type === 'warning' && `
+  ${({ type }) =>
+    type === "warning" &&
+    `
     & .toastIcon {
       color: ${toastWarningColor};
       background-color: ${toastWarningBg};

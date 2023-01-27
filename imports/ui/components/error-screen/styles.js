@@ -1,9 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import {
   colorWhite,
   colorGrayDark,
   colorGrayLighter,
-} from '/imports/ui/stylesheets/styled-components/palette';
+  colorPrimary,
+  colorBlack,
+} from "/imports/ui/stylesheets/styled-components/palette";
 
 const Background = styled.div`
   position: fixed;
@@ -12,14 +14,14 @@ const Background = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: ${colorGrayDark};
-  color: ${colorWhite};
+  background-color: ${colorPrimary};
+  color: ${colorBlack};
   text-align: center;
 `;
 
 const Message = styled.h1`
   margin: 0;
-  color: ${colorWhite};
+  color: ${colorBlack};
   font-size: 1.75rem;
   font-weight: 400;
   margin-bottom: 1rem;
@@ -27,7 +29,7 @@ const Message = styled.h1`
 
 const SessionMessage = styled.div`
   margin: 0;
-  color: ${colorWhite};
+  color: ${colorBlack};
   font-weight: 400;
   margin-bottom: 1rem;
   font-size: 1.25rem;
@@ -36,16 +38,16 @@ const SessionMessage = styled.div`
 const Separator = styled.div`
   height: 0;
   width: 5rem;
-  border: 1px solid ${colorGrayLighter};
+  border: 1px solid ${colorBlack};
   margin: 1.5rem 0 1.5rem 0;
   align-self: center;
-  opacity: .75;
+  opacity: 0.75;
 `;
 
 const CodeError = styled.h1`
   margin: 0;
   font-size: 1.5rem;
-  color: ${colorWhite};
+  color: ${colorBlack};
 `;
 
 export default {

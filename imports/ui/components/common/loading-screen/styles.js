@@ -1,7 +1,13 @@
-import styled, { css, keyframes } from 'styled-components';
-import { mdPaddingX } from '/imports/ui/stylesheets/styled-components/general';
-import { loaderBg, loaderBullet, colorWhite } from '/imports/ui/stylesheets/styled-components/palette';
-import { fontSizeLarge } from '/imports/ui/stylesheets/styled-components/typography';
+import styled, { css, keyframes } from "styled-components";
+import { mdPaddingX } from "/imports/ui/stylesheets/styled-components/general";
+import {
+  loaderBg,
+  loaderBullet,
+  colorWhite,
+  colorPrimary,
+  colorBlack,
+} from "/imports/ui/stylesheets/styled-components/palette";
+import { fontSizeLarge } from "/imports/ui/stylesheets/styled-components/typography";
 
 const Background = styled.div`
   position: fixed;
@@ -10,7 +16,7 @@ const Background = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  background-color: ${loaderBg};
+  background-color: ${colorPrimary};
   z-index: 4;
 `;
 
@@ -35,24 +41,30 @@ const Spinner = styled.div`
     width: 18px;
     height: 18px;
     margin: 0 5px;
-    background-color: ${loaderBullet};
+    background-color: #018752;
     border-radius: 100%;
     display: inline-block;
 
-    ${({ animations }) => animations && css`
-      animation: ${skBouncedelay} 1.4s infinite ease-in-out both;
-    `}
+    ${({ animations }) =>
+      animations &&
+      css`
+        animation: ${skBouncedelay} 1.4s infinite ease-in-out both;
+      `}
   }
 `;
 
 const Bounce1 = styled.div`
-  ${({ animations }) => animations && `
+  ${({ animations }) =>
+    animations &&
+    `
     animation-delay: -0.32s !important;
   `}
 `;
 
 const Bounce2 = styled.div`
-  ${({ animations }) => animations && `
+  ${({ animations }) =>
+    animations &&
+    `
     animation-delay: -0.16s !important;
   `}
 `;

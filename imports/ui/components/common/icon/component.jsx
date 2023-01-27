@@ -1,7 +1,7 @@
-import React, { memo } from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
-import _ from 'lodash';
+import React, { memo } from "react";
+import PropTypes from "prop-types";
+import cx from "classnames";
+import _ from "lodash";
 
 const propTypes = {
   iconName: PropTypes.string.isRequired,
@@ -9,19 +9,14 @@ const propTypes = {
 };
 
 const defaultProps = {
-  prependIconName: 'icon-bbb-',
+  prependIconName: "icon-bbb-",
 };
 
-const Icon = ({
-  className,
-  prependIconName,
-  iconName,
-  ...props
-}) => (
+const Icon = ({ className, prependIconName, iconName, ...props }) => (
   <i
-    className={cx(className, [prependIconName, iconName].join(''))}
+    className={cx(className, [prependIconName, iconName].join(""))}
     // ToastContainer from react-toastify passes a useless closeToast prop here
-    {..._.omit(props, ['closeToast', 'animations'])}
+    {..._.omit(props, ["closeToast", "animations"])}
   />
 );
 

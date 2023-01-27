@@ -1,14 +1,17 @@
-import styled from 'styled-components';
-import Icon from '/imports/ui/components/common/icon/component';
-import { barsPadding, borderSize } from '/imports/ui/stylesheets/styled-components/general';
+import styled from "styled-components";
+import Icon from "/imports/ui/components/common/icon/component";
+import {
+  barsPadding,
+  borderSize,
+} from "/imports/ui/stylesheets/styled-components/general";
 import {
   colorWhite,
   colorDanger,
   colorGrayDark,
-} from '/imports/ui/stylesheets/styled-components/palette';
-import { fontSizeBase } from '/imports/ui/stylesheets/styled-components/typography';
-import { phoneLandscape } from '/imports/ui/stylesheets/styled-components/breakpoints';
-import Button from '/imports/ui/components/common/button/component';
+} from "/imports/ui/stylesheets/styled-components/palette";
+import { fontSizeBase } from "/imports/ui/stylesheets/styled-components/typography";
+import { phoneLandscape } from "/imports/ui/stylesheets/styled-components/breakpoints";
+import Button from "/imports/ui/components/common/button/component";
 
 const Navbar = styled.header`
   position: absolute;
@@ -25,7 +28,7 @@ const Top = styled.div`
 `;
 
 const Left = styled.div`
-  display: flex;
+  display: none;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -36,14 +39,14 @@ const ArrowLeft = styled(Icon)`
   position: absolute;
   font-size: 40%;
   color: ${colorWhite};
-  left: .25rem;
+  left: 0.25rem;
 `;
 
 const ArrowRight = styled(Icon)`
   position: absolute;
   font-size: 40%;
   color: ${colorWhite};
-  right: .0125rem;
+  right: 0.0125rem;
 `;
 
 const Center = styled.div`
@@ -57,7 +60,7 @@ const Center = styled.div`
 
 const PresentationTitle = styled.h1`
   font-weight: 400;
-  color: ${colorWhite};
+  color: var(--btn-primary-bg, #000000);
   font-size: ${fontSizeBase};
   margin: 0;
   padding: 0;
@@ -84,13 +87,12 @@ const Bottom = styled.div`
   flex-direction: row;
 
   @media ${phoneLandscape} {
-    margin-top: .25rem;
+    margin-top: 0.25rem;
   }
 `;
 
 const NavbarToggleButton = styled(Button)`
   margin: 0;
-
   z-index: 3;
 
   &:hover,
@@ -98,11 +100,13 @@ const NavbarToggleButton = styled(Button)`
     span {
       background-color: transparent !important;
       color: ${colorWhite} !important;
-      opacity: .75;
+      opacity: 0.75;
     }
   }
 
-  ${({ hasNotification }) => hasNotification && `
+  ${({ hasNotification }) =>
+    hasNotification &&
+    `
     position: relative;
 
     &:after {

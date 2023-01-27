@@ -1,43 +1,41 @@
-import React, { Component } from 'react';
-import logger from '/imports/startup/client/logger';
-import Auth from '/imports/ui/services/auth';
-import { defineMessages, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
-import Button from '/imports/ui/components/common/button/component';
-import BBBMenu from '/imports/ui/components/common/menu/component';
-import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
+import React, { Component } from "react";
+import logger from "/imports/startup/client/logger";
+import Auth from "/imports/ui/services/auth";
+import { defineMessages, injectIntl } from "react-intl";
+import PropTypes from "prop-types";
+import BBBMenu from "/imports/ui/components/common/menu/component";
+import withShortcutHelper from "/imports/ui/components/shortcut-help/service";
+import Styled from "./styles";
 
-import Styled from './styles';
-
-const AUDIO_INPUT = 'audioinput';
-const AUDIO_OUTPUT = 'audiooutput';
-const DEFAULT_DEVICE = 'default';
+const AUDIO_INPUT = "audioinput";
+const AUDIO_OUTPUT = "audiooutput";
+const DEFAULT_DEVICE = "default";
 const DEVICE_LABEL_MAX_LENGTH = 40;
 
 const intlMessages = defineMessages({
   changeAudioDevice: {
-    id: 'app.audio.changeAudioDevice',
-    description: 'Change audio device button label',
+    id: "app.audio.changeAudioDevice",
+    description: "Change audio device button label",
   },
   leaveAudio: {
-    id: 'app.audio.leaveAudio',
-    description: 'Leave audio dropdown item label',
+    id: "app.audio.leaveAudio",
+    description: "Leave audio dropdown item label",
   },
   loading: {
-    id: 'app.audio.loading',
-    description: 'Loading audio dropdown item label',
+    id: "app.audio.loading",
+    description: "Loading audio dropdown item label",
   },
   noDeviceFound: {
-    id: 'app.audio.noDeviceFound',
-    description: 'No device found',
+    id: "app.audio.noDeviceFound",
+    description: "No device found",
   },
   microphones: {
-    id: 'app.audio.microphones',
-    description: 'Input audio dropdown item label',
+    id: "app.audio.microphones",
+    description: "Input audio dropdown item label",
   },
   speakers: {
-    id: 'app.audio.speakers',
-    description: 'Output audio dropdown item label',
+    id: "app.audio.speakers",
+    description: "Output audio dropdown item label",
   },
 });
 
@@ -57,7 +55,7 @@ const propTypes = {
 
 class InputStreamLiveSelector extends Component {
   static truncateDeviceName(deviceName) {
-    if (deviceName && (deviceName.length <= DEVICE_LABEL_MAX_LENGTH)) {
+    if (deviceName && deviceName.length <= DEVICE_LABEL_MAX_LENGTH) {
       return deviceName;
     }
     return `${deviceName.substring(0, DEVICE_LABEL_MAX_LENGTH - 3)}...`;
@@ -77,15 +75,19 @@ class InputStreamLiveSelector extends Component {
 
   componentDidMount() {
     this.updateDeviceList().then(() => {
-      navigator.mediaDevices
-        .addEventListener('devicechange', this.updateDeviceList);
+      navigator.mediaDevices.addEventListener(
+        "devicechange",
+        this.updateDeviceList
+      );
       this.setCurrentDevices();
     });
   }
 
   componentWillUnmount() {
-    navigator.mediaDevices.removeEventListener('devicechange',
-      this.updateDeviceList);
+    navigator.mediaDevices.removeEventListener(
+      "devicechange",
+      this.updateDeviceList
+    );
   }
 
   onDeviceListClick(deviceId, deviceKind, callback) {
@@ -101,28 +103,29 @@ class InputStreamLiveSelector extends Component {
   }
 
   setCurrentDevices() {
-    const {
-      currentInputDeviceId,
-      currentOutputDeviceId,
-    } = this.props;
+    const { currentInputDeviceId, currentOutputDeviceId } = this.props;
 
-    const {
-      audioInputDevices,
-      audioOutputDevices,
-    } = this.state;
+    const { audioInputDevices, audioOutputDevices } = this.state;
 
-    if (!audioInputDevices
-      || !audioInputDevices[0]
-      || !audioOutputDevices
-      || !audioOutputDevices[0]) return;
+    if (
+      !audioInputDevices ||
+      !audioInputDevices[0] ||
+      !audioOutputDevices ||
+      !audioOutputDevices[0]
+    )
+      return;
 
     const _currentInputDeviceId = audioInputDevices.find(
-      (d) => d.deviceId === currentInputDeviceId,
-    ) ? currentInputDeviceId : audioInputDevices[0].deviceId;
+      (d) => d.deviceId === currentInputDeviceId
+    )
+      ? currentInputDeviceId
+      : audioInputDevices[0].deviceId;
 
     const _currentOutputDeviceId = audioOutputDevices.find(
-      (d) => d.deviceId === currentOutputDeviceId,
-    ) ? currentOutputDeviceId : audioOutputDevices[0].deviceId;
+      (d) => d.deviceId === currentOutputDeviceId
+    )
+      ? currentOutputDeviceId
+      : audioOutputDevices[0].deviceId;
 
     this.setState({
       selectedInputDeviceId: _currentInputDeviceId,
@@ -133,17 +136,18 @@ class InputStreamLiveSelector extends Component {
   fallbackInputDevice(fallbackDevice) {
     if (!fallbackDevice || !fallbackDevice.deviceId) return;
 
-    const {
-      liveChangeInputDevice,
-    } = this.props;
+    const { liveChangeInputDevice } = this.props;
 
-    logger.info({
-      logCode: 'audio_device_live_selector',
-      extraInfo: {
-        userId: Auth.userID,
-        meetingId: Auth.meetingID,
+    logger.info(
+      {
+        logCode: "audio_device_live_selector",
+        extraInfo: {
+          userId: Auth.userID,
+          meetingId: Auth.meetingID,
+        },
       },
-    }, 'Current input device was removed. Fallback to default device');
+      "Current input device was removed. Fallback to default device"
+    );
     this.setState({ selectedInputDeviceId: fallbackDevice.deviceId });
     liveChangeInputDevice(fallbackDevice.deviceId);
   }
@@ -151,98 +155,103 @@ class InputStreamLiveSelector extends Component {
   fallbackOutputDevice(fallbackDevice) {
     if (!fallbackDevice || !fallbackDevice.deviceId) return;
 
-    const {
-      liveChangeOutputDevice,
-    } = this.props;
+    const { liveChangeOutputDevice } = this.props;
 
-    logger.info({
-      logCode: 'audio_device_live_selector',
-      extraInfo: {
-        userId: Auth.userID,
-        meetingId: Auth.meetingID,
+    logger.info(
+      {
+        logCode: "audio_device_live_selector",
+        extraInfo: {
+          userId: Auth.userID,
+          meetingId: Auth.meetingID,
+        },
       },
-    }, 'Current output device was removed. Fallback to default device');
+      "Current output device was removed. Fallback to default device"
+    );
     this.setState({ selectedOutputDeviceId: fallbackDevice.deviceId });
     liveChangeOutputDevice(fallbackDevice.deviceId, true);
   }
 
   updateRemovedDevices(audioInputDevices, audioOutputDevices) {
-    const {
-      selectedInputDeviceId,
-      selectedOutputDeviceId,
-    } = this.state;
+    const { selectedInputDeviceId, selectedOutputDeviceId } = this.state;
 
-    if (selectedInputDeviceId
-      && (selectedInputDeviceId !== DEFAULT_DEVICE)
-      && !audioInputDevices.find((d) => d.deviceId === selectedInputDeviceId)) {
+    if (
+      selectedInputDeviceId &&
+      selectedInputDeviceId !== DEFAULT_DEVICE &&
+      !audioInputDevices.find((d) => d.deviceId === selectedInputDeviceId)
+    ) {
       this.fallbackInputDevice(audioInputDevices[0]);
     }
 
-    if (selectedOutputDeviceId
-      && (selectedOutputDeviceId !== DEFAULT_DEVICE)
-      && !audioOutputDevices.find((d) => d.deviceId === selectedOutputDeviceId)) {
+    if (
+      selectedOutputDeviceId &&
+      selectedOutputDeviceId !== DEFAULT_DEVICE &&
+      !audioOutputDevices.find((d) => d.deviceId === selectedOutputDeviceId)
+    ) {
       this.fallbackOutputDevice(audioOutputDevices[0]);
     }
   }
 
   updateDeviceList() {
-    const {
-      isAudioConnected,
-    } = this.props;
+    const { isAudioConnected } = this.props;
 
-    return navigator.mediaDevices.enumerateDevices()
-      .then((devices) => {
-        const audioInputDevices = devices.filter((i) => i.kind === AUDIO_INPUT);
-        const audioOutputDevices = devices.filter((i) => i.kind === AUDIO_OUTPUT);
+    return navigator.mediaDevices.enumerateDevices().then((devices) => {
+      const audioInputDevices = devices.filter((i) => i.kind === AUDIO_INPUT);
+      const audioOutputDevices = devices.filter((i) => i.kind === AUDIO_OUTPUT);
 
-        this.setState({
-          audioInputDevices,
-          audioOutputDevices,
-        });
-
-        if (isAudioConnected) {
-          this.updateRemovedDevices(audioInputDevices, audioOutputDevices);
-        }
+      this.setState({
+        audioInputDevices,
+        audioOutputDevices,
       });
+
+      if (isAudioConnected) {
+        this.updateRemovedDevices(audioInputDevices, audioOutputDevices);
+      }
+    });
   }
 
-  renderDeviceList(deviceKind, list, callback, title, currentDeviceId,
-    renderSeparator = true) {
-    const {
-      intl,
-    } = this.props;
+  renderDeviceList(
+    deviceKind,
+    list,
+    callback,
+    title,
+    currentDeviceId,
+    renderSeparator = true
+  ) {
+    const { intl } = this.props;
     const listLength = list ? list.length : -1;
     const listTitle = [
       {
         key: `audioDeviceList-${deviceKind}`,
         label: title,
         disabled: true,
-        dividerTop: (!renderSeparator),
+        dividerTop: !renderSeparator,
       },
     ];
 
-    const customStyles = { fontWeight: 'bold' };
-    const disableDeviceStyles = { pointerEvents: 'none' };
+    const customStyles = { fontWeight: "bold" };
+    const disableDeviceStyles = { pointerEvents: "none" };
 
-    const deviceList = (listLength > 0)
-      ? list.map((device) => (
-        {
-          key: `${device.deviceId}-${deviceKind}`,
-          label: InputStreamLiveSelector.truncateDeviceName(device.label),
-          customStyles: (device.deviceId === currentDeviceId) ? customStyles : null,
-          iconRight: (device.deviceId === currentDeviceId) ? 'check' : null,
-          onClick: () => this.onDeviceListClick(device.deviceId, deviceKind, callback),
-        }
-      ))
-      : [
-        {
-          key: `noDeviceFoundKey-${deviceKind}-`,
-          label: listLength < 0
-            ? intl.formatMessage(intlMessages.loading)
-            : intl.formatMessage(intlMessages.noDeviceFound),
-          customStyles: disableDeviceStyles,
-        },
-      ];
+    const deviceList =
+      listLength > 0
+        ? list.map((device) => ({
+            key: `${device.deviceId}-${deviceKind}`,
+            label: InputStreamLiveSelector.truncateDeviceName(device.label),
+            customStyles:
+              device.deviceId === currentDeviceId ? customStyles : null,
+            iconRight: device.deviceId === currentDeviceId ? "check" : null,
+            onClick: () =>
+              this.onDeviceListClick(device.deviceId, deviceKind, callback),
+          }))
+        : [
+            {
+              key: `noDeviceFoundKey-${deviceKind}-`,
+              label:
+                listLength < 0
+                  ? intl.formatMessage(intlMessages.loading)
+                  : intl.formatMessage(intlMessages.noDeviceFound),
+              customStyles: disableDeviceStyles,
+            },
+          ];
     return listTitle.concat(deviceList);
   }
 
@@ -268,12 +277,13 @@ class InputStreamLiveSelector extends Component {
 
     const inputDeviceList = !isListenOnly
       ? this.renderDeviceList(
-        AUDIO_INPUT,
-        audioInputDevices,
-        liveChangeInputDevice,
-        intl.formatMessage(intlMessages.microphones),
-        selectedInputDeviceId || currentInputDeviceId,
-      ) : [];
+          AUDIO_INPUT,
+          audioInputDevices,
+          liveChangeInputDevice,
+          intl.formatMessage(intlMessages.microphones),
+          selectedInputDeviceId || currentInputDeviceId
+        )
+      : [];
 
     const outputDeviceList = this.renderDeviceList(
       AUDIO_OUTPUT,
@@ -281,23 +291,24 @@ class InputStreamLiveSelector extends Component {
       liveChangeOutputDevice,
       intl.formatMessage(intlMessages.speakers),
       selectedOutputDeviceId || currentOutputDeviceId,
-      false,
+      false
     );
 
     const dropdownListComplete = inputDeviceList.concat(outputDeviceList);
 
     return (
       <BBBMenu
-        trigger={(
+        trigger={
           <>
-            <Button
+            <Styled.AudioBtn
               aria-label={intl.formatMessage(intlMessages.leaveAudio)}
               label={intl.formatMessage(intlMessages.leaveAudio)}
               accessKey={shortcuts.leaveaudio}
               data-test="leaveAudio"
               hideLabel
+              isConnected={this.props.isAudioConnected}
               color="primary"
-              icon={isListenOnly ? 'listen' : 'volume_level_2'}
+              icon={isListenOnly ? "listen" : "volume_level_2"}
               size="lg"
               circle
               onClick={(e) => {
@@ -313,17 +324,23 @@ class InputStreamLiveSelector extends Component {
               rotate
             />
           </>
-        )}
+        }
         actions={dropdownListComplete}
         opts={{
-          id: 'default-dropdown-menu',
+          id: "default-dropdown-menu",
           keepMounted: true,
           transitionDuration: 0,
           elevation: 3,
           getContentAnchorEl: null,
-          fullwidth: 'true',
-          anchorOrigin: { vertical: 'top', horizontal: isRTL ? 'left' : 'right' },
-          transformOrigin: { vertical: 'bottom', horizontal: isRTL ? 'right' : 'left' },
+          fullwidth: "true",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: isRTL ? "left" : "right",
+          },
+          transformOrigin: {
+            vertical: "bottom",
+            horizontal: isRTL ? "right" : "left",
+          },
         }}
       />
     );
@@ -332,5 +349,6 @@ class InputStreamLiveSelector extends Component {
 
 InputStreamLiveSelector.propTypes = propTypes;
 
-export default withShortcutHelper(injectIntl(InputStreamLiveSelector),
-  ['leaveAudio']);
+export default withShortcutHelper(injectIntl(InputStreamLiveSelector), [
+  "leaveAudio",
+]);

@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import {
   colorWhite,
   colorContentBackground,
-} from '/imports/ui/stylesheets/styled-components/palette';
-import SpinnerStyles from '/imports/ui/components/common/loading-screen/styles';
+} from "/imports/ui/stylesheets/styled-components/palette";
+import SpinnerStyles from "/imports/ui/components/common/loading-screen/styles";
 
 const ScreenshareContainerInside = styled.div`
   display: flex;
@@ -20,18 +20,22 @@ const MainText = styled.h1`
 `;
 
 const ScreenshareVideo = styled.video`
-  ${({ unhealthyStream }) => unhealthyStream && `
+  ${({ unhealthyStream }) =>
+    unhealthyStream &&
+    `
     filter: grayscale(50%) opacity(50%);
   `}
 `;
 
 const ScreenshareContainer = styled.div`
   position: relative;
-  background-color: ${colorContentBackground};
+  background-color: #ddf1ea;
   width: 100%;
   height: 100%;
 
-  ${({ switched }) => !switched && `
+  ${({ switched }) =>
+    !switched &&
+    `
     display: flex;
     align-items: center;
     justify-content: center;
@@ -64,7 +68,7 @@ const Bounce2 = styled(SpinnerStyles.Bounce2)``;
 
 const MobileControlsOverlay = styled.span`
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -72,7 +76,9 @@ const MobileControlsOverlay = styled.span`
 `;
 
 const HoverToolbar = styled.div`
-  ${({ toolbarStyle }) => toolbarStyle === 'hoverToolbar' && `
+  ${({ toolbarStyle }) =>
+    toolbarStyle === "hoverToolbar" &&
+    `
     display: none;
 
     #screenshareContainer:hover > & {
@@ -80,11 +86,15 @@ const HoverToolbar = styled.div`
     }
   `}
 
-  ${({ toolbarStyle }) => toolbarStyle === 'dontShowMobileHoverToolbar' && `
+  ${({ toolbarStyle }) =>
+    toolbarStyle === "dontShowMobileHoverToolbar" &&
+    `
     display: none;
   `}
 
-  ${({ toolbarStyle }) => toolbarStyle === 'showMobileHoverToolbar' && `
+  ${({ toolbarStyle }) =>
+    toolbarStyle === "showMobileHoverToolbar" &&
+    `
     display: flex;
     z-index: 2;
   `}

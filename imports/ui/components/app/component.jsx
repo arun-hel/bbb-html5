@@ -1,54 +1,64 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { throttle } from 'lodash';
-import { defineMessages, injectIntl } from 'react-intl';
-import Modal from 'react-modal';
-import browserInfo from '/imports/utils/browserInfo';
-import deviceInfo from '/imports/utils/deviceInfo';
-import PollingContainer from '/imports/ui/components/polling/container';
-import logger from '/imports/startup/client/logger';
-import ActivityCheckContainer from '/imports/ui/components/activity-check/container';
-import UserInfoContainer from '/imports/ui/components/user-info/container';
-import BreakoutRoomInvitation from '/imports/ui/components/breakout-room/invitation/container';
-import { Meteor } from 'meteor/meteor';
-import ToastContainer from '/imports/ui/components/common/toast/container';
-import PadsSessionsContainer from '/imports/ui/components/pads/sessions/container';
-import ModalContainer from '/imports/ui/components/common/modal/container';
-import NotificationsBarContainer from '../notifications-bar/container';
-import AudioContainer from '../audio/container';
-import ChatAlertContainer from '../chat/alert/container';
-import BannerBarContainer from '/imports/ui/components/banner-bar/container';
-import WaitingNotifierContainer from '/imports/ui/components/waiting-users/alert/container';
-import LockNotifier from '/imports/ui/components/lock-viewers/notify/container';
-import StatusNotifier from '/imports/ui/components/status-notifier/container';
-import ManyWebcamsNotifier from '/imports/ui/components/video-provider/many-users-notify/container';
-import UploaderContainer from '/imports/ui/components/presentation/presentation-uploader/container';
-import CaptionsSpeechContainer from '/imports/ui/components/captions/speech/container';
-import RandomUserSelectContainer from '/imports/ui/components/common/modal/random-user/container';
-import ScreenReaderAlertContainer from '../screenreader-alert/container';
-import NewWebcamContainer from '../webcam/container';
-import PresentationAreaContainer from '../presentation/presentation-area/container';
-import ScreenshareContainer from '../screenshare/container';
-import ExternalVideoContainer from '../external-video-player/container';
-import Styled from './styles';
-import { DEVICE_TYPE, ACTIONS, SMALL_VIEWPORT_BREAKPOINT } from '../layout/enums';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { throttle } from "lodash";
+import { defineMessages, injectIntl } from "react-intl";
+import Modal from "react-modal";
+import browserInfo from "/imports/utils/browserInfo";
+import deviceInfo from "/imports/utils/deviceInfo";
+import PollingContainer from "/imports/ui/components/polling/container";
+import logger from "/imports/startup/client/logger";
+import ActivityCheckContainer from "/imports/ui/components/activity-check/container";
+import UserInfoContainer from "/imports/ui/components/user-info/container";
+import BreakoutRoomInvitation from "/imports/ui/components/breakout-room/invitation/container";
+import { Meteor } from "meteor/meteor";
+import ToastContainer from "/imports/ui/components/common/toast/container";
+import PadsSessionsContainer from "/imports/ui/components/pads/sessions/container";
+import ModalContainer from "/imports/ui/components/common/modal/container";
+import NotificationsBarContainer from "../notifications-bar/container";
+import AudioContainer from "../audio/container";
+import ChatAlertContainer from "../chat/alert/container";
+import BannerBarContainer from "/imports/ui/components/banner-bar/container";
+import WaitingNotifierContainer from "/imports/ui/components/waiting-users/alert/container";
+import LockNotifier from "/imports/ui/components/lock-viewers/notify/container";
+import StatusNotifier from "/imports/ui/components/status-notifier/container";
+import ManyWebcamsNotifier from "/imports/ui/components/video-provider/many-users-notify/container";
+import UploaderContainer from "/imports/ui/components/presentation/presentation-uploader/container";
+import CaptionsSpeechContainer from "/imports/ui/components/captions/speech/container";
+import RandomUserSelectContainer from "/imports/ui/components/common/modal/random-user/container";
+import ScreenReaderAlertContainer from "../screenreader-alert/container";
+import NewWebcamContainer from "../webcam/container";
+import PresentationAreaContainer from "../presentation/presentation-area/container";
+import ScreenshareContainer from "../screenshare/container";
+import ExternalVideoContainer from "../external-video-player/container";
+import Styled from "./styles";
 import {
-  isMobile, isTablet, isTabletPortrait, isTabletLandscape, isDesktop,
-} from '../layout/utils';
-import LayoutEngine from '../layout/layout-manager/layoutEngine';
-import NavBarContainer from '../nav-bar/container';
-import SidebarNavigationContainer from '../sidebar-navigation/container';
-import SidebarContentContainer from '../sidebar-content/container';
-import { makeCall } from '/imports/ui/services/api';
-import ConnectionStatusService from '/imports/ui/components/connection-status/service';
-import Settings from '/imports/ui/services/settings';
-import LayoutService from '/imports/ui/components/layout/service';
-import { registerTitleView } from '/imports/utils/dom-utils';
-import GlobalStyles from '/imports/ui/stylesheets/styled-components/globalStyles';
-import MediaService from '/imports/ui/components/media/service';
-import { toast } from 'react-toastify';
+  DEVICE_TYPE,
+  ACTIONS,
+  SMALL_VIEWPORT_BREAKPOINT,
+  PANELS,
+} from "../layout/enums";
 
-const MOBILE_MEDIA = 'only screen and (max-width: 40em)';
+import {
+  isMobile,
+  isTablet,
+  isTabletPortrait,
+  isTabletLandscape,
+  isDesktop,
+} from "../layout/utils";
+import LayoutEngine from "../layout/layout-manager/layoutEngine";
+import NavBarContainer from "../nav-bar/container";
+import SidebarNavigationContainer from "../sidebar-navigation/container";
+import SidebarContentContainer from "../sidebar-content/container";
+import { makeCall } from "/imports/ui/services/api";
+import ConnectionStatusService from "/imports/ui/components/connection-status/service";
+import Settings from "/imports/ui/services/settings";
+import LayoutService from "/imports/ui/components/layout/service";
+import { registerTitleView } from "/imports/utils/dom-utils";
+import GlobalStyles from "/imports/ui/stylesheets/styled-components/globalStyles";
+import MediaService from "/imports/ui/components/media/service";
+import { toast } from "react-toastify";
+
+const MOBILE_MEDIA = "only screen and (max-width: 40em)";
 const APP_CONFIG = Meteor.settings.public.app;
 const DESKTOP_FONT_SIZE = APP_CONFIG.desktopFontSize;
 const MOBILE_FONT_SIZE = APP_CONFIG.mobileFontSize;
@@ -58,60 +68,60 @@ const MODERATOR = Meteor.settings.public.user.role_moderator;
 
 const intlMessages = defineMessages({
   userListLabel: {
-    id: 'app.userList.label',
-    description: 'Aria-label for Userlist Nav',
+    id: "app.userList.label",
+    description: "Aria-label for Userlist Nav",
   },
   chatLabel: {
-    id: 'app.chat.label',
-    description: 'Aria-label for Chat Section',
+    id: "app.chat.label",
+    description: "Aria-label for Chat Section",
   },
   actionsBarLabel: {
-    id: 'app.actionsBar.label',
-    description: 'Aria-label for ActionsBar Section',
+    id: "app.actionsBar.label",
+    description: "Aria-label for ActionsBar Section",
   },
   iOSWarning: {
-    id: 'app.iOSWarning.label',
-    description: 'message indicating to upgrade ios version',
+    id: "app.iOSWarning.label",
+    description: "message indicating to upgrade ios version",
   },
   clearedEmoji: {
-    id: 'app.toast.clearedEmoji.label',
-    description: 'message for cleared emoji status',
+    id: "app.toast.clearedEmoji.label",
+    description: "message for cleared emoji status",
   },
   setEmoji: {
-    id: 'app.toast.setEmoji.label',
-    description: 'message when a user emoji has been set',
+    id: "app.toast.setEmoji.label",
+    description: "message when a user emoji has been set",
   },
   raisedHand: {
-    id: 'app.toast.setEmoji.raiseHand',
-    description: 'toast message for raised hand notification',
+    id: "app.toast.setEmoji.raiseHand",
+    description: "toast message for raised hand notification",
   },
   loweredHand: {
-    id: 'app.toast.setEmoji.lowerHand',
-    description: 'toast message for lowered hand notification',
+    id: "app.toast.setEmoji.lowerHand",
+    description: "toast message for lowered hand notification",
   },
   meetingMuteOn: {
-    id: 'app.toast.meetingMuteOn.label',
-    description: 'message used when meeting has been muted',
+    id: "app.toast.meetingMuteOn.label",
+    description: "message used when meeting has been muted",
   },
   meetingMuteOff: {
-    id: 'app.toast.meetingMuteOff.label',
-    description: 'message used when meeting has been unmuted',
+    id: "app.toast.meetingMuteOff.label",
+    description: "message used when meeting has been unmuted",
   },
   pollPublishedLabel: {
-    id: 'app.whiteboard.annotations.poll',
-    description: 'message displayed when a poll is published',
+    id: "app.whiteboard.annotations.poll",
+    description: "message displayed when a poll is published",
   },
   defaultViewLabel: {
-    id: 'app.title.defaultViewLabel',
-    description: 'view name apended to document title',
+    id: "app.title.defaultViewLabel",
+    description: "view name apended to document title",
   },
   promotedLabel: {
-    id: 'app.toast.promotedLabel',
-    description: 'notification message when promoted',
+    id: "app.toast.promotedLabel",
+    description: "notification message when promoted",
   },
   demotedLabel: {
-    id: 'app.toast.demotedLabel',
-    description: 'notification message when demoted',
+    id: "app.toast.demotedLabel",
+    description: "notification message when demoted",
   },
 });
 
@@ -127,7 +137,9 @@ const defaultProps = {
   locale: OVERRIDE_LOCALE || navigator.language,
 };
 
-const isLayeredView = window.matchMedia(`(max-width: ${SMALL_VIEWPORT_BREAKPOINT}px)`);
+const isLayeredView = window.matchMedia(
+  `(max-width: ${SMALL_VIEWPORT_BREAKPOINT}px)`
+);
 
 let publishedPollToast = null;
 
@@ -146,8 +158,10 @@ class App extends Component {
     this.shouldAriaHide = this.shouldAriaHide.bind(this);
     this.renderWebcamsContainer = App.renderWebcamsContainer.bind(this);
 
-    this.throttledDeviceType = throttle(() => this.setDeviceType(),
-      50, { trailing: true, leading: true }).bind(this);
+    this.throttledDeviceType = throttle(() => this.setDeviceType(), 50, {
+      trailing: true,
+      leading: true,
+    }).bind(this);
   }
 
   componentDidMount() {
@@ -175,8 +189,10 @@ class App extends Component {
       value: isRTL,
     });
 
-    const presentationOpen = !(autoSwapLayout || hidePresentation)
-      || shouldShowExternalVideo || shouldShowScreenshare;
+    const presentationOpen =
+      !(autoSwapLayout || hidePresentation) ||
+      shouldShowExternalVideo ||
+      shouldShowScreenshare;
 
     layoutContextDispatch({
       type: ACTIONS.SET_PRESENTATION_IS_OPEN,
@@ -187,11 +203,11 @@ class App extends Component {
       MediaService.setSwapLayout(layoutContextDispatch);
     }
 
-    Modal.setAppElement('#app');
+    Modal.setAppElement("#app");
 
     const fontSize = isMobile() ? MOBILE_FONT_SIZE : DESKTOP_FONT_SIZE;
-    document.getElementsByTagName('html')[0].lang = locale;
-    document.getElementsByTagName('html')[0].style.fontSize = fontSize;
+    document.getElementsByTagName("html")[0].lang = locale;
+    document.getElementsByTagName("html")[0].style.fontSize = fontSize;
 
     layoutContextDispatch({
       type: ACTIONS.SET_FONT_SIZE,
@@ -203,39 +219,45 @@ class App extends Component {
     Settings.application.selectedLayout = currentLayout;
     Settings.save();
 
-    const body = document.getElementsByTagName('body')[0];
+    const body = document.getElementsByTagName("body")[0];
 
     if (browserName) {
-      body.classList.add(`browser-${browserName.split(' ').pop()
-        .toLowerCase()}`);
-    }
-
-    body.classList.add(`os-${osName.split(' ').shift().toLowerCase()}`);
-
-    body.classList.add(`lang-${locale.split('-')[0]}`);
-
-    if (!validIOSVersion()) {
-      notify(
-        intl.formatMessage(intlMessages.iOSWarning), 'error', 'warning',
+      body.classList.add(
+        `browser-${browserName.split(" ").pop().toLowerCase()}`
       );
     }
 
+    body.classList.add(`os-${osName.split(" ").shift().toLowerCase()}`);
+
+    body.classList.add(`lang-${locale.split("-")[0]}`);
+
+    if (!validIOSVersion()) {
+      notify(intl.formatMessage(intlMessages.iOSWarning), "error", "warning");
+    }
+
     this.handleWindowResize();
-    window.addEventListener('resize', this.handleWindowResize, false);
-    window.addEventListener('localeChanged', () => {
+    window.addEventListener("resize", this.handleWindowResize, false);
+    window.addEventListener("localeChanged", () => {
       layoutContextDispatch({
         type: ACTIONS.SET_IS_RTL,
         value: Settings.application.isRTL,
       });
     });
-    window.ondragover = (e) => { e.preventDefault(); };
-    window.ondrop = (e) => { e.preventDefault(); };
+    window.ondragover = (e) => {
+      e.preventDefault();
+    };
+    window.ondrop = (e) => {
+      e.preventDefault();
+    };
 
-    if (deviceInfo.isMobile) makeCall('setMobileUser');
+    if (deviceInfo.isMobile) makeCall("setMobileUser");
 
     ConnectionStatusService.startRoundTripTime();
 
-    logger.info({ logCode: 'app_component_componentdidmount' }, 'Client loaded successfully');
+    logger.info(
+      { logCode: "app_component_componentdidmount" },
+      "Client loaded successfully"
+    );
   }
 
   componentDidUpdate(prevProps) {
@@ -268,8 +290,10 @@ class App extends Component {
       Settings.save();
     }
 
-    if (selectedLayout !== prevProps.selectedLayout
-      || settingsLayout !== layoutType) {
+    if (
+      selectedLayout !== prevProps.selectedLayout ||
+      settingsLayout !== layoutType
+    ) {
       layoutContextDispatch({
         type: ACTIONS.SET_LAYOUT_TYPE,
         value: settingsLayout,
@@ -283,64 +307,67 @@ class App extends Component {
     if (mountRandomUserModal) mountModal(<RandomUserSelectContainer />);
 
     if (prevProps.currentUserEmoji.status !== currentUserEmoji.status) {
-      const formattedEmojiStatus = intl.formatMessage({ id: `app.actionsBar.emojiMenu.${currentUserEmoji.status}Label` })
-        || currentUserEmoji.status;
+      const formattedEmojiStatus =
+        intl.formatMessage({
+          id: `app.actionsBar.emojiMenu.${currentUserEmoji.status}Label`,
+        }) || currentUserEmoji.status;
 
-      const raisedHand = currentUserEmoji.status === 'raiseHand';
+      const raisedHand = currentUserEmoji.status === "raiseHand";
 
-      let statusLabel = '';
-      if (currentUserEmoji.status === 'none') {
-        statusLabel = prevProps.currentUserEmoji.status === 'raiseHand'
-          ? intl.formatMessage(intlMessages.loweredHand)
-          : intl.formatMessage(intlMessages.clearedEmoji);
+      let statusLabel = "";
+      if (currentUserEmoji.status === "none") {
+        statusLabel =
+          prevProps.currentUserEmoji.status === "raiseHand"
+            ? intl.formatMessage(intlMessages.loweredHand)
+            : intl.formatMessage(intlMessages.clearedEmoji);
       } else {
         statusLabel = raisedHand
           ? intl.formatMessage(intlMessages.raisedHand)
-          : intl.formatMessage(intlMessages.setEmoji, ({ 0: formattedEmojiStatus }));
+          : intl.formatMessage(intlMessages.setEmoji, {
+              0: formattedEmojiStatus,
+            });
       }
 
       notify(
         statusLabel,
-        'info',
-        currentUserEmoji.status === 'none'
-          ? 'clear_status'
-          : 'user',
+        "info",
+        currentUserEmoji.status === "none" ? "clear_status" : "user"
       );
     }
     if (!prevProps.meetingMuted && meetingMuted) {
-      notify(
-        intl.formatMessage(intlMessages.meetingMuteOn), 'info', 'mute',
-      );
+      notify(intl.formatMessage(intlMessages.meetingMuteOn), "info", "mute");
     }
     if (prevProps.meetingMuted && !meetingMuted) {
-      notify(
-        intl.formatMessage(intlMessages.meetingMuteOff), 'info', 'unmute',
-      );
+      notify(intl.formatMessage(intlMessages.meetingMuteOff), "info", "unmute");
     }
-    if (!prevProps.hasPublishedPoll && hasPublishedPoll && !ignorePollNotifications) {
+    if (
+      !prevProps.hasPublishedPoll &&
+      hasPublishedPoll &&
+      !ignorePollNotifications
+    ) {
       const id = notify(
-        intl.formatMessage(intlMessages.pollPublishedLabel), 'info', 'polling',
+        intl.formatMessage(intlMessages.pollPublishedLabel),
+        "info",
+        "polling"
       );
       if (id) publishedPollToast = id;
     }
     if (prevProps.currentUserRole === VIEWER && currentUserRole === MODERATOR) {
-      notify(
-        intl.formatMessage(intlMessages.promotedLabel), 'info', 'user',
-      );
+      notify(intl.formatMessage(intlMessages.promotedLabel), "info", "user");
     }
     if (prevProps.currentUserRole === MODERATOR && currentUserRole === VIEWER) {
-      notify(
-        intl.formatMessage(intlMessages.demotedLabel), 'info', 'user',
-      );
+      notify(intl.formatMessage(intlMessages.demotedLabel), "info", "user");
     }
 
-    if (deviceType === null || prevProps.deviceType !== deviceType) this.throttledDeviceType();
+    if (deviceType === null || prevProps.deviceType !== deviceType)
+      this.throttledDeviceType();
 
-    if (ignorePollNotifications && publishedPollToast) toast.dismiss(publishedPollToast);
+    if (ignorePollNotifications && publishedPollToast)
+      toast.dismiss(publishedPollToast);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize, false);
+    window.removeEventListener("resize", this.handleWindowResize, false);
     ConnectionStatusService.stopRoundTripTime();
   }
 
@@ -371,31 +398,29 @@ class App extends Component {
   }
 
   shouldAriaHide() {
-    const { sidebarNavigationIsOpen, sidebarContentIsOpen, isPhone } = this.props;
-    return sidebarNavigationIsOpen
-      && sidebarContentIsOpen
-      && (isPhone || isLayeredView.matches);
+    const { sidebarNavigationIsOpen, sidebarContentIsOpen, isPhone } =
+      this.props;
+    return (
+      sidebarNavigationIsOpen &&
+      sidebarContentIsOpen &&
+      (isPhone || isLayeredView.matches)
+    );
   }
 
   renderCaptions() {
-    const {
-      captions,
-      captionsStyle,
-    } = this.props;
+    const { captions, captionsStyle } = this.props;
 
     if (!captions) return null;
 
     return (
       <Styled.CaptionsWrapper
         role="region"
-        style={
-          {
-            position: 'absolute',
-            left: captionsStyle.left,
-            right: captionsStyle.right,
-            maxWidth: captionsStyle.maxWidth,
-          }
-        }
+        style={{
+          position: "absolute",
+          left: captionsStyle.left,
+          right: captionsStyle.right,
+          maxWidth: captionsStyle.maxWidth,
+        }}
       >
         {captions}
       </Styled.CaptionsWrapper>
@@ -403,12 +428,7 @@ class App extends Component {
   }
 
   renderActionsBar() {
-    const {
-      actionsbar,
-      intl,
-      actionsBarStyle,
-      hideActionsBar,
-    } = this.props;
+    const { actionsbar, intl, actionsBarStyle, hideActionsBar } = this.props;
 
     if (!actionsbar || hideActionsBar) return null;
 
@@ -417,16 +437,14 @@ class App extends Component {
         role="region"
         aria-label={intl.formatMessage(intlMessages.actionsBarLabel)}
         aria-hidden={this.shouldAriaHide()}
-        style={
-          {
-            position: 'absolute',
-            top: actionsBarStyle.top,
-            left: actionsBarStyle.left,
-            height: actionsBarStyle.height,
-            width: actionsBarStyle.width,
-            padding: actionsBarStyle.padding,
-          }
-        }
+        style={{
+          position: "absolute",
+          top: actionsBarStyle.top,
+          left: actionsBarStyle.left,
+          height: actionsBarStyle.height,
+          width: actionsBarStyle.width,
+          padding: actionsBarStyle.padding,
+        }}
       >
         {actionsbar}
       </Styled.ActionsBar>
@@ -438,24 +456,24 @@ class App extends Component {
 
     const { inactivityCheck, responseDelay } = User;
 
-    return (inactivityCheck ? (
+    return inactivityCheck ? (
       <ActivityCheckContainer
         inactivityCheck={inactivityCheck}
         responseDelay={responseDelay}
       />
-    ) : null);
+    ) : null;
   }
 
   renderUserInformation() {
     const { UserInfo, User } = this.props;
 
-    return (UserInfo.length > 0 ? (
+    return UserInfo.length > 0 ? (
       <UserInfoContainer
         UserInfo={UserInfo}
         requesterUserId={User.userId}
         meetingId={User.meetingId}
       />
-    ) : null);
+    ) : null;
   }
 
   render() {
@@ -478,8 +496,8 @@ class App extends Component {
         <Styled.Layout
           id="layout"
           style={{
-            width: '100%',
-            height: '100%',
+            width: "100%",
+            height: "100%",
           }}
         >
           {this.renderActivityCheck()}
@@ -487,30 +505,26 @@ class App extends Component {
           <ScreenReaderAlertContainer />
           <BannerBarContainer />
           <NotificationsBarContainer />
-          <SidebarNavigationContainer />
-          <SidebarContentContainer />
+
           <NavBarContainer main="new" />
           {this.renderWebcamsContainer()}
           {shouldShowPresentation ? <PresentationAreaContainer /> : null}
           {shouldShowScreenshare ? <ScreenshareContainer /> : null}
-          {
-            shouldShowExternalVideo
-              ? <ExternalVideoContainer isPresenter={isPresenter} />
-              : null
-          }
+          {shouldShowExternalVideo ? (
+            <ExternalVideoContainer isPresenter={isPresenter} />
+          ) : null}
           {this.renderCaptions()}
           <UploaderContainer />
           <CaptionsSpeechContainer />
           <BreakoutRoomInvitation />
           <AudioContainer />
           <ToastContainer rtl />
-          {(audioAlertEnabled || pushAlertEnabled)
-            && (
-              <ChatAlertContainer
-                audioAlertEnabled={audioAlertEnabled}
-                pushAlertEnabled={pushAlertEnabled}
-              />
-            )}
+          {(audioAlertEnabled || pushAlertEnabled) && (
+            <ChatAlertContainer
+              audioAlertEnabled={audioAlertEnabled}
+              pushAlertEnabled={pushAlertEnabled}
+            />
+          )}
           <WaitingNotifierContainer />
           <LockNotifier />
           <StatusNotifier status="raiseHand" />
@@ -518,9 +532,31 @@ class App extends Component {
           <PollingContainer />
           <ModalContainer />
           <PadsSessionsContainer />
+
+          <SidebarNavigationContainer
+            handleUserListState={this.props.handleUserListState}
+          />
+
+          <SidebarContentContainer
+            handleChatState={this.props.handleChatState}
+            handleUserListState={this.props.handleUserListState}
+            isChatOpened={this.props.isChatOpened}
+            isUserListOpned={this.props.isUserListOpned}
+          />
+
           {this.renderActionsBar()}
-          {customStyleUrl ? <link rel="stylesheet" type="text/css" href={customStyleUrl} /> : null}
-          {customStyle ? <link rel="stylesheet" type="text/css" href={`data:text/css;charset=UTF-8,${encodeURIComponent(customStyle)}`} /> : null}
+          {customStyleUrl ? (
+            <link rel="stylesheet" type="text/css" href={customStyleUrl} />
+          ) : null}
+          {customStyle ? (
+            <link
+              rel="stylesheet"
+              type="text/css"
+              href={`data:text/css;charset=UTF-8,${encodeURIComponent(
+                customStyle
+              )}`}
+            />
+          ) : null}
         </Styled.Layout>
       </>
     );

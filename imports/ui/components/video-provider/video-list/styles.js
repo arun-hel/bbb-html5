@@ -1,9 +1,12 @@
-import styled from 'styled-components';
-import { colorWhite } from '/imports/ui/stylesheets/styled-components/palette';
-import { mdPaddingX } from '/imports/ui/stylesheets/styled-components/general';
-import { mediumUp } from '/imports/ui/stylesheets/styled-components/breakpoints';
-import { actionsBarHeight, navbarHeight } from '/imports/ui/stylesheets/styled-components/general';
-import Button from '/imports/ui/components/common/button/component';
+import styled from "styled-components";
+import { colorWhite } from "/imports/ui/stylesheets/styled-components/palette";
+import { mdPaddingX } from "/imports/ui/stylesheets/styled-components/general";
+import { mediumUp } from "/imports/ui/stylesheets/styled-components/breakpoints";
+import {
+  actionsBarHeight,
+  navbarHeight,
+} from "/imports/ui/stylesheets/styled-components/general";
+import Button from "/imports/ui/components/common/button/component";
 
 const NextPageButton = styled(Button)`
   color: ${colorWhite};
@@ -25,7 +28,9 @@ const NextPageButton = styled(Button)`
     margin-left: 2px;
   }
 
-  ${({ position }) => (position === 'contentRight' || position === 'contentLeft') && `
+  ${({ position }) =>
+    (position === "contentRight" || position === "contentLeft") &&
+    `
     order: 3;
     margin-right: 2px;
   `}
@@ -51,7 +56,9 @@ const PreviousPageButton = styled(Button)`
     margin-right: 2px;
   }
 
-  ${({ position }) => (position === 'contentRight' || position === 'contentLeft') && `
+  ${({ position }) =>
+    (position === "contentRight" || position === "contentLeft") &&
+    `
     order: 2;
     margin-left: 2px;
   `}
@@ -63,7 +70,9 @@ const VideoListItem = styled.div`
   width: 100%;
   max-height: 100%;
 
-  ${({ focused }) => focused && `
+  ${({ focused }) =>
+    focused &&
+    `
     grid-column: 1 / span 2;
     grid-row: 1 / span 2;
   `}
@@ -81,8 +90,12 @@ const VideoCanvas = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0.5rem;
+  padding: 0.5rem;
 
-  ${({ position }) => (position === 'contentRight' || position === 'contentLeft') && `
+  ${({ position }) =>
+    (position === "contentRight" || position === "contentLeft") &&
+    `
     flex-wrap: wrap;
     align-content: center;
     order: 0;

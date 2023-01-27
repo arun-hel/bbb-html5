@@ -1,14 +1,14 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import Styled from '/imports/ui/components/user-list/styles';
-import { FlexColumn } from '/imports/ui/stylesheets/styled-components/placeholders';
+import Styled from "/imports/ui/components/user-list/styles";
+import { FlexColumn } from "/imports/ui/stylesheets/styled-components/placeholders";
 import {
   smPaddingX,
   lgPaddingY,
   borderSize,
   mdPaddingY,
   mdPaddingX,
-} from '/imports/ui/stylesheets/styled-components/general';
+} from "/imports/ui/stylesheets/styled-components/general";
 import {
   colorPrimary,
   userListBg,
@@ -20,9 +20,9 @@ import {
   listItemBgHover,
   itemFocusBorder,
   unreadMessagesBg,
-} from '/imports/ui/stylesheets/styled-components/palette';
-import { fontSizeSmall } from '/imports/ui/stylesheets/styled-components/typography';
-import { ScrollboxVertical } from '/imports/ui/stylesheets/styled-components/scrollable';
+} from "/imports/ui/stylesheets/styled-components/palette";
+import { fontSizeSmall } from "/imports/ui/stylesheets/styled-components/typography";
+import { ScrollboxVertical } from "/imports/ui/stylesheets/styled-components/scrollable";
 
 const Content = styled(FlexColumn)`
   flex-grow: 1;
@@ -37,14 +37,23 @@ const Container = styled.div`
 `;
 
 const ScrollableList = styled(ScrollboxVertical)`
-  background: linear-gradient(${userListBg} 30%, rgba(255,255,255,0)),
-    linear-gradient(rgba(255,255,255,0), ${userListBg} 70%) 0 100%,
+  background: linear-gradient(${userListBg} 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(rgba(255, 255, 255, 0), ${userListBg} 70%) 0 100%,
     /* Shadows */
-    radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)),
-    radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
+      radial-gradient(
+        farthest-side at 50% 0,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      ),
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      )
+      0 100%;
 
   outline: none;
-  
+
   &:hover {
     /* Visible in Windows high-contrast themes */
     outline: transparent;
@@ -87,7 +96,7 @@ const ListItem = styled(Styled.ListItem)`
   color: ${colorGrayDark};
   background-color: ${colorOffWhite};
 
-  [dir="rtl"]  & {
+  [dir="rtl"] & {
     padding-right: ${lgPaddingY};
     padding-left: 0;
   }
@@ -98,7 +107,7 @@ const ListItem = styled(Styled.ListItem)`
     color: ${colorGrayLight};
     flex: 0 0 2.2rem;
     margin-right: ${smPaddingX};
-    [dir="rtl"]  & {
+    [dir="rtl"] & {
       margin-right: 0;
       margin-left: ${smPaddingX};
     }
@@ -131,7 +140,8 @@ const ListItem = styled(Styled.ListItem)`
 
   &:active {
     background-color: ${listItemBgHover};
-    box-shadow: inset 0 0 0 ${borderSize} ${itemFocusBorder}, inset 1px 0 0 1px ${itemFocusBorder};
+    box-shadow: inset 0 0 0 ${borderSize} ${itemFocusBorder},
+      inset 1px 0 0 1px ${itemFocusBorder};
   }
 `;
 

@@ -1,21 +1,20 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import {
   smPaddingX,
   smPaddingY,
   mdPaddingY,
   mdPaddingX,
-} from '/imports/ui/stylesheets/styled-components/general';
-import { smallOnly } from '/imports/ui/stylesheets/styled-components/breakpoints';
+} from "/imports/ui/stylesheets/styled-components/general";
+import { smallOnly } from "/imports/ui/stylesheets/styled-components/breakpoints";
 import {
   colorGrayDark,
   colorPrimary,
   colorWhite,
-} from '/imports/ui/stylesheets/styled-components/palette';
-import { fontSizeLarge } from '/imports/ui/stylesheets/styled-components/typography';
-import {
-  Tab, Tabs, TabList, TabPanel,
-} from 'react-tabs';
-import Icon from '/imports/ui/components/common/icon/component';
+  colorSuccess,
+} from "/imports/ui/stylesheets/styled-components/palette";
+import { fontSizeLarge } from "/imports/ui/stylesheets/styled-components/typography";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import Icon from "/imports/ui/components/common/icon/component";
 
 const ToggleLabel = styled.span`
   margin-right: ${smPaddingX};
@@ -61,7 +60,7 @@ const SettingsTabSelector = styled(Tab)`
   border: none !important;
   padding: ${mdPaddingY} ${mdPaddingX};
   color: ${colorGrayDark};
-  border-radius: .2rem;
+  border-radius: 0.2rem;
   cursor: pointer;
   margin-bottom: ${smPaddingY};
   align-items: center;
@@ -84,13 +83,13 @@ const SettingsTabSelector = styled(Tab)`
     }
 
     [dir="rtl"] & {
-       margin: 0 0 0 ${smPaddingX};
+      margin: 0 0 0 ${smPaddingX};
     }
   }
 
   &.is-selected {
     color: ${colorWhite};
-    background-color: ${colorPrimary};
+    background-color: ${colorSuccess};
     font-weight: bold;
 
     & > i {
@@ -100,11 +99,11 @@ const SettingsTabSelector = styled(Tab)`
 `;
 
 const SettingsIcon = styled(Icon)`
-  margin: 0 .5rem 0 0;
+  margin: 0 0.5rem 0 0;
   font-size: ${fontSizeLarge};
 
   [dir="rtl"] & {
-     margin: 0 0 0 .5rem;
+    margin: 0 0 0 0.5rem;
   }
 `;
 

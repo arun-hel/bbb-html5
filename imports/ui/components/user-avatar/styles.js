@@ -1,9 +1,9 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css, keyframes } from "styled-components";
 import {
   userIndicatorsOffset,
   mdPaddingY,
   indicatorPadding,
-} from '/imports/ui/stylesheets/styled-components/general';
+} from "/imports/ui/stylesheets/styled-components/general";
 import {
   colorPrimary,
   colorWhite,
@@ -11,7 +11,7 @@ import {
   colorSuccess,
   colorDanger,
   colorOffWhite,
-} from '/imports/ui/stylesheets/styled-components/palette';
+} from "/imports/ui/stylesheets/styled-components/palette";
 
 const Content = styled.div`
   color: ${colorWhite};
@@ -39,11 +39,15 @@ const Img = styled.img`
   object-fit: cover;
   overflow: hidden;
 
-  ${({ moderator }) => moderator && `
+  ${({ moderator }) =>
+    moderator &&
+    `
     border-radius: 3px;
   `}
 
-  ${({ moderator }) => !moderator && `
+  ${({ moderator }) =>
+    !moderator &&
+    `
     border-radius: 50%;
   `}
 `;
@@ -67,16 +71,24 @@ const Talking = styled.div`
   left: 0;
   border-radius: inherit;
 
-  ${({ talking }) => talking && css`
-    background-color: currentColor;
-  `}
+  ${({ talking }) =>
+    talking &&
+    css`
+      background-color: currentColor;
+    `}
 
-  ${({ talking, animations }) => talking && animations && css`
-    animation: ${pulse} 1s infinite ease-in;
-  `}
+  ${({ talking, animations }) =>
+    talking &&
+    animations &&
+    css`
+      animation: ${pulse} 1s infinite ease-in;
+    `}
 
   &::before {
-    ${({ talking, animations }) => talking && !animations && `
+    ${({ talking, animations }) =>
+      talking &&
+      !animations &&
+      `
       content: '';
       position: absolute;
       top: 0;
@@ -97,10 +109,12 @@ const Avatar = styled.div`
   min-width: 2.25rem;
   border-radius: 50%;
   text-align: center;
-  font-size: .85rem;
+  font-size: 0.85rem;
   border: 2px solid transparent;
 
-  ${({ animations }) => animations && `
+  ${({ animations }) =>
+    animations &&
+    `
     transition: .3s ease-in-out;
   `}
 
@@ -110,7 +124,7 @@ const Avatar = styled.div`
     position: absolute;
     width: 0;
     height: 0;
-    padding-top: .5rem;
+    padding-top: 0.5rem;
     padding-right: 0;
     padding-left: 0;
     padding-bottom: 0;
@@ -124,31 +138,37 @@ const Avatar = styled.div`
     background-color: ${colorSuccess};
     color: ${colorWhite};
     opacity: 0;
-    font-family: 'bbb-icons';
-    font-size: .65rem;
+    font-family: "bbb-icons";
+    font-size: 0.65rem;
     line-height: 0;
     text-align: center;
     vertical-align: middle;
-    letter-spacing: -.65rem;
+    letter-spacing: -0.65rem;
     z-index: 1;
 
     [dir="rtl"] & {
       left: ${userIndicatorsOffset};
       right: auto;
-      padding-right: .65rem;
+      padding-right: 0.65rem;
       padding-left: 0;
     }
 
-    ${({ animations }) => animations && `
+    ${({ animations }) =>
+      animations &&
+      `
       transition: .3s ease-in-out;
     `}
   }
 
-  ${({ moderator }) => moderator && `
+  ${({ moderator }) =>
+    moderator &&
+    `
     border-radius: 5px;
   `}
 
-  ${({ presenter }) => presenter && `
+  ${({ presenter }) =>
+    presenter &&
+    `
     &:before {
       content: "\\00a0\\e90b\\00a0";
       padding: ${mdPaddingY} !important;
@@ -168,15 +188,18 @@ const Avatar = styled.div`
     }
   `}
 
-  ${({
-    presenter, isChrome, isFirefox, isEdge,
-  }) => presenter && (isChrome || isFirefox || isEdge) && `
+  ${({ presenter, isChrome, isFirefox, isEdge }) =>
+    presenter &&
+    (isChrome || isFirefox || isEdge) &&
+    `
     &:before {
       padding: ${indicatorPadding} !important;
     }
   `}
 
-  ${({ whiteboardAccess }) => whiteboardAccess && `
+  ${({ whiteboardAccess }) =>
+    whiteboardAccess &&
+    `
     &:before {
       content: "\\00a0\\e925\\00a0";
       padding: ${mdPaddingY} !important;
@@ -198,15 +221,18 @@ const Avatar = styled.div`
     }
   `}
 
-  ${({
-    whiteboardAccess, isChrome, isFirefox, isEdge,
-  }) => whiteboardAccess && (isChrome || isFirefox || isEdge) && `
+  ${({ whiteboardAccess, isChrome, isFirefox, isEdge }) =>
+    whiteboardAccess &&
+    (isChrome || isFirefox || isEdge) &&
+    `
     &:before {
       padding: ${indicatorPadding};
     }
   `}
 
-  ${({ voice }) => voice && `
+  ${({ voice }) =>
+    voice &&
+    `
     &:after {
       content: "\\00a0\\e931\\00a0";
       background-color: ${colorSuccess};
@@ -224,7 +250,9 @@ const Avatar = styled.div`
     }
   `}
 
-  ${({ muted }) => muted && `
+  ${({ muted }) =>
+    muted &&
+    `
     &:after {
       content: "\\00a0\\e932\\00a0";
       background-color: ${colorDanger};
@@ -234,7 +262,9 @@ const Avatar = styled.div`
     }
   `}
 
-  ${({ listenOnly }) => listenOnly && `
+  ${({ listenOnly }) =>
+    listenOnly &&
+    `
     &:after {
       content: "\\00a0\\e90c\\00a0";
       opacity: 1;
@@ -243,7 +273,9 @@ const Avatar = styled.div`
     }
   `}
 
-  ${({ noVoice }) => noVoice && `
+  ${({ noVoice }) =>
+    noVoice &&
+    `
     &:after {
       content: "";
       background-color: ${colorOffWhite};
@@ -264,7 +296,7 @@ const Avatar = styled.div`
 `;
 
 const Skeleton = styled.div`
-  & .react-loading-skeleton {    
+  & .react-loading-skeleton {
     height: 2.25rem;
     width: 2.25rem;
   }

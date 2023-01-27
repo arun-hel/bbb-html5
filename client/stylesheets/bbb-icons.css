@@ -1,6 +1,7 @@
-[class^="icon-bbb-"], [class*=" icon-bbb-"] {
+[class^="icon-bbb-"],
+[class*=" icon-bbb-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'bbb-icons' !important;
+  font-family: "bbb-icons" !important;
   speak: none;
   position: relative;
   /*top: 1px;*/
@@ -16,6 +17,10 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button > span > [class*="icon-bbb-"] {
+  color: green;
 }
 
 .icon-bbb-screenshare-fullscreen:before {
@@ -113,6 +118,9 @@
 .icon-bbb-user:before {
   content: "\e905";
 }
+.icon-bbb-user_list:before {
+  content: "\e966";
+}
 .icon-bbb-up_arrow:before {
   content: "\e906";
 }
@@ -193,7 +201,6 @@
 .icon-bbb-no_audio:before {
   content: "\e963";
 }
-
 
 /* Aliases for emoji status */
 .icon-bbb-time:before {

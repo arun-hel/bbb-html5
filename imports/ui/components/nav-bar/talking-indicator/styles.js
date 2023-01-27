@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import {
   borderSize,
   borderRadius,
@@ -9,35 +9,38 @@ import {
   talkerMarginSm,
   spokeOpacity,
   talkerPaddingXl,
-} from '/imports/ui/stylesheets/styled-components/general';
+} from "/imports/ui/stylesheets/styled-components/general";
 import {
   colorWhite,
   colorSuccess,
   colorDanger,
-} from '/imports/ui/stylesheets/styled-components/palette';
+  colorPrimary,
+} from "/imports/ui/stylesheets/styled-components/palette";
 import {
   fontSizeBase,
   talkerFontWeight,
   fontSizeXS,
   fontSizeSmaller,
-} from '/imports/ui/stylesheets/styled-components/typography';
-import { phoneLandscape, smallOnly } from '/imports/ui/stylesheets/styled-components/breakpoints';
-import Button from '/imports/ui/components/common/button/component';
+} from "/imports/ui/stylesheets/styled-components/typography";
+import {
+  phoneLandscape,
+  smallOnly,
+} from "/imports/ui/stylesheets/styled-components/breakpoints";
+import Button from "/imports/ui/components/common/button/component";
 
 const TalkingIndicatorButton = styled(Button)`
   display: flex;
   flex-direction: row;
-
   outline: transparent;
   outline-style: dotted;
   outline-width: ${borderSize};
-
   flex: 0 0 auto;
   color: ${colorWhite};
   font-weight: ${talkerFontWeight};
   border-radius: ${talkerBorderRadius} ${talkerBorderRadius};
   font-size: ${fontSizeBase};
-  padding: ${talkerPaddingXsm} ${talkerPaddingLg} ${talkerPaddingXsm} ${talkerPaddingLg};
+  padding: ${talkerPaddingXsm} ${talkerPaddingLg} ${talkerPaddingXsm}
+    ${talkerPaddingLg};
   margin-left: ${borderRadius};
   margin-right: ${borderRadius};
   box-shadow: none !important;
@@ -45,7 +48,7 @@ const TalkingIndicatorButton = styled(Button)`
   @media ${phoneLandscape} {
     height: 1rem;
   }
-  
+
   i,
   span {
     position: relative;
@@ -62,7 +65,7 @@ const TalkingIndicatorButton = styled(Button)`
       font-size: ${fontSizeXS};
     }
 
-    [dir="rtl"]  & {
+    [dir="rtl"] & {
       margin-left: ${talkerMarginSm};
     }
   }
@@ -72,6 +75,7 @@ const TalkingIndicatorButton = styled(Button)`
     width: 1rem;
     height: 1rem;
     line-height: 1rem;
+    color: ${colorWhite};
     background-color: ${colorSuccess};
     border-radius: 50%;
     position: relative;
@@ -83,7 +87,7 @@ const TalkingIndicatorButton = styled(Button)`
       font-size: ${fontSizeXS};
     }
 
-    [dir="rtl"]  & {
+    [dir="rtl"] & {
       right: calc(${talkerMarginSm} * -1);
     }
   }
@@ -92,7 +96,9 @@ const TalkingIndicatorButton = styled(Button)`
     opacity: 1;
   }
 
-  ${({ spoke }) => spoke && `
+  ${({ spoke }) =>
+    spoke &&
+    `
     opacity: ${spokeOpacity};
 
     [dir="rtl"]  & {
@@ -100,15 +106,19 @@ const TalkingIndicatorButton = styled(Button)`
     }
   `}
 
-  ${({ muted }) => muted && `
+  ${({ muted }) =>
+    muted &&
+    `
     cursor: default;
-  
+
     i {
       background-color: ${colorDanger};
     }
   `}
 
-  ${({ isViewer }) => isViewer && `
+  ${({ isViewer }) =>
+    isViewer &&
+    `
     cursor: default;
   `}
 `;

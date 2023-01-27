@@ -1,10 +1,10 @@
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes, css } from "styled-components";
 import {
   colorPrimary,
   colorBlack,
   colorWhite,
-} from '/imports/ui/stylesheets/styled-components/palette';
-import { TextElipsis } from '/imports/ui/stylesheets/styled-components/placeholders';
+} from "/imports/ui/stylesheets/styled-components/palette";
+import { TextElipsis } from "/imports/ui/stylesheets/styled-components/placeholders";
 
 const rotate360 = keyframes`
   from {
@@ -31,18 +31,24 @@ const Content = styled.div`
     opacity: 0;
     pointer-events: none;
 
-    ${({ animations }) => animations && `
+    ${({ animations }) =>
+      animations &&
+      `
       transition: opacity .1s;
     `}
   }
 
-  ${({ talking }) => talking && `
+  ${({ talking }) =>
+    talking &&
+    `
     &::after {
       opacity: 0.7;
     }
   `}
 
-  ${({ fullscreen }) => fullscreen && `
+  ${({ fullscreen }) =>
+    fullscreen &&
+    `
     position: fixed;
     top: 0;
     left: 0;
@@ -66,7 +72,7 @@ const WebcamConnecting = styled.div`
   white-space: nowrap;
   z-index: 1;
   vertical-align: middle;
-  border-radius: 1px;
+
   opacity: 1;
 
   position: relative;
@@ -84,12 +90,16 @@ const WebcamConnecting = styled.div`
     opacity: 0;
     pointer-events: none;
 
-    ${({ animations }) => animations && `
+    ${({ animations }) =>
+      animations &&
+      `
       transition: opacity .1s;
     `}
   }
 
-  ${({ talking }) => talking && `
+  ${({ talking }) =>
+    talking &&
+    `
     &::after {
       opacity: 0.7;
     }
@@ -114,13 +124,15 @@ const Reconnecting = styled.div`
   color: ${colorWhite};
 
   &::before {
-    font-family: 'bbb-icons' !important;
+    font-family: "bbb-icons" !important;
     content: "\\e949";
     /* ascii code for the ellipsis character */
     display: inline-block;
-    ${({ animations }) => animations && css`
-      animation: ${rotate360} 2s infinite linear;
-    `}
+    ${({ animations }) =>
+      animations &&
+      css`
+        animation: ${rotate360} 2s infinite linear;
+      `}
   }
 `;
 
@@ -136,11 +148,15 @@ const Video = styled.video`
   object-fit: contain;
   background-color: ${colorBlack};
 
-  ${({ mirrored }) => mirrored && `
+  ${({ mirrored }) =>
+    mirrored &&
+    `
     transform: scale(-1, 1);
   `}
 
-  ${({ unhealthyStream }) => unhealthyStream && `
+  ${({ unhealthyStream }) =>
+    unhealthyStream &&
+    `
     filter: grayscale(50%) opacity(50%);
   `}
 `;

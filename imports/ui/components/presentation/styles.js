@@ -1,26 +1,27 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import {
   innerToastWidth,
   toastIconSide,
   smPaddingX,
   smPaddingY,
-} from '/imports/ui/stylesheets/styled-components/general';
+} from "/imports/ui/stylesheets/styled-components/general";
 import {
   colorPrimary,
   colorWhite,
-} from '/imports/ui/stylesheets/styled-components/palette';
-import {
-  fontSizeLarger,
-} from '/imports/ui/stylesheets/styled-components/typography';
-import FullscreenButtonContainer from '/imports/ui/components/common/fullscreen-button/container';
-import ToastStyled from '/imports/ui/components/common/toast/styles';
+} from "/imports/ui/stylesheets/styled-components/palette";
+import { fontSizeLarger } from "/imports/ui/stylesheets/styled-components/typography";
+import FullscreenButtonContainer from "/imports/ui/components/common/fullscreen-button/container";
+import ToastStyled from "/imports/ui/components/common/toast/styles";
 
 const VisuallyHidden = styled.span`
   position: absolute;
   overflow: hidden;
   clip: rect(0 0 0 0);
-  height: 1px; width: 1px;
-  margin: -1px; padding: 0; border: 0;
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
 `;
 
 const PresentationSvg = styled.svg`
@@ -50,7 +51,7 @@ const PresentationFullscreenButton = styled(FullscreenButtonContainer)`
 
   [dir="rtl"] & {
     right: auto;
-    left : 0;
+    left: 0;
   }
 `;
 

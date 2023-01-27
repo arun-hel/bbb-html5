@@ -1,18 +1,22 @@
-import styled from 'styled-components';
-import Styled from '../base/styles';
-import { smallOnly } from '/imports/ui/stylesheets/styled-components/breakpoints';
-import Button from '/imports/ui/components/common/button/component';
-import { borderSize, smPaddingX } from '/imports/ui/stylesheets/styled-components/general';
+import styled from "styled-components";
+import Styled from "../base/styles";
+import { smallOnly } from "/imports/ui/stylesheets/styled-components/breakpoints";
+import Button from "/imports/ui/components/common/button/component";
+import {
+  borderSize,
+  smPaddingX,
+} from "/imports/ui/stylesheets/styled-components/general";
 import {
   lineHeightComputed,
   modalTitleFw,
-} from '/imports/ui/stylesheets/styled-components/typography';
+} from "/imports/ui/stylesheets/styled-components/typography";
 import {
   colorGrayLighter,
   colorText,
   colorWhite,
   colorLink,
-} from '/imports/ui/stylesheets/styled-components/palette';
+  colorSuccess,
+} from "/imports/ui/stylesheets/styled-components/palette";
 
 const FullscreenModal = styled(Styled.BaseModal)`
   outline: transparent;
@@ -66,9 +70,11 @@ const DismissButton = styled(Button)`
 const ConfirmButton = styled(Button)`
   flex: 0 1 48%;
   color: ${colorWhite} !important;
-  background-color: ${colorLink} !important;
+  background-color: ${colorSuccess} !important;
 
-  ${({ popout }) => popout === 'popout' && `
+  ${({ popout }) =>
+    popout === "popout" &&
+    `
     & > i {
       bottom: ${borderSize};
       left: ${smPaddingX};

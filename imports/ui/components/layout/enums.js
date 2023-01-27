@@ -58,6 +58,8 @@ export const ACTIONS = {
   SET_SIDEBAR_CONTENT_OUTPUT: 'setSidebarContentOutput',
   SET_SIDEBAR_CONTENT_IS_RESIZABLE: 'setSidebarContentIsResizable',
   SET_SIDEBAR_CONTENT_RESIZABLE_EDGE: 'setSidebarContentResizableEdge',
+  SET_CHAT_IS_ACTIVE : 'setIsChatActive',
+  SET_USERLIST_ACTIVE: 'setIsUserListActive',
 
   SET_MEDIA_AREA_SIZE: 'setMediaAreaSize',
 

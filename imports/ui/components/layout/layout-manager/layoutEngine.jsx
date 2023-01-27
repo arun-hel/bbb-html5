@@ -1,13 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { layoutSelect, layoutSelectInput } from '/imports/ui/components/layout/context';
-import DEFAULT_VALUES from '/imports/ui/components/layout/defaultValues';
-import { LAYOUT_TYPE, DEVICE_TYPE } from '/imports/ui/components/layout/enums';
+import React from "react";
+import PropTypes from "prop-types";
+import {
+  layoutSelect,
+  layoutSelectInput,
+} from "/imports/ui/components/layout/context";
+import DEFAULT_VALUES from "/imports/ui/components/layout/defaultValues";
+import { LAYOUT_TYPE, DEVICE_TYPE } from "/imports/ui/components/layout/enums";
 
-import CustomLayout from '/imports/ui/components/layout/layout-manager/customLayout';
-import SmartLayout from '/imports/ui/components/layout/layout-manager/smartLayout';
-import PresentationFocusLayout from '/imports/ui/components/layout/layout-manager/presentationFocusLayout';
-import VideoFocusLayout from '/imports/ui/components/layout/layout-manager/videoFocusLayout';
+import CustomLayout from "/imports/ui/components/layout/layout-manager/customLayout";
+import SmartLayout from "/imports/ui/components/layout/layout-manager/smartLayout";
+import PresentationFocusLayout from "/imports/ui/components/layout/layout-manager/presentationFocusLayout";
+import VideoFocusLayout from "/imports/ui/components/layout/layout-manager/videoFocusLayout";
 
 const propTypes = {
   layoutType: PropTypes.string.isRequired,
@@ -40,7 +43,9 @@ const LayoutEngine = ({ layoutType }) => {
     const { hasNotification } = notificationsBarInput;
     const { hasBanner } = bannerBarInput;
     const bannerHeight = hasBanner ? DEFAULT_VALUES.bannerHeight : 0;
-    const notificationHeight = hasNotification ? DEFAULT_VALUES.bannerHeight : 0;
+    const notificationHeight = hasNotification
+      ? DEFAULT_VALUES.bannerHeight
+      : 0;
 
     return bannerHeight + notificationHeight;
   };
@@ -60,19 +65,27 @@ const LayoutEngine = ({ layoutType }) => {
       return cameraDockBounds;
     }
 
-    const isSmartLayout = (layoutType === LAYOUT_TYPE.SMART_LAYOUT);
+    const isSmartLayout = layoutType === LAYOUT_TYPE.SMART_LAYOUT;
 
-    if (!isOpen || (isSmartLayout && currentSlideNumber === 0 && !hasExternalVideo && !hasScreenShare)) {
+    if (
+      !isOpen ||
+      (isSmartLayout &&
+        currentSlideNumber === 0 &&
+        !hasExternalVideo &&
+        !hasScreenShare)
+    ) {
       cameraDockBounds.width = mediaAreaBounds.width;
       cameraDockBounds.maxWidth = mediaAreaBounds.width;
       cameraDockBounds.height = mediaAreaBounds.height - bannerAreaHeight();
       cameraDockBounds.maxHeight = mediaAreaBounds.height;
       cameraDockBounds.top = DEFAULT_VALUES.navBarHeight + bannerAreaHeight();
-      cameraDockBounds.left = !isRTL ? mediaAreaBounds.left : 0;
-      cameraDockBounds.right = isRTL ? sidebarSize : null;
+      // cameraDockBounds.left = !isRTL ? mediaAreaBounds.left : 0;
+      // cameraDockBounds.right = isRTL ? sidebarSize : null;
+      cameraDockBounds.left = mediaAreaBounds.left;
+      cameraDockBounds.right = sidebarSize;
     }
 
-    if (fullscreen.group === 'webcams') {
+    if (fullscreen.group === "webcams") {
       cameraDockBounds.width = windowWidth();
       cameraDockBounds.minWidth = windowWidth();
       cameraDockBounds.maxWidth = windowWidth();
@@ -106,10 +119,10 @@ const LayoutEngine = ({ layoutType }) => {
     const { actionBarHeight, actionBarPadding } = DEFAULT_VALUES;
 
     const BASE_FONT_SIZE = 14; // 90% font size
-    const height = ((actionBarHeight / BASE_FONT_SIZE) * fontSize);
+    const height = (actionBarHeight / BASE_FONT_SIZE) * fontSize;
 
     return {
-      height: height + (actionBarPadding * 2),
+      height: height + actionBarPadding * 2,
       innerHeight: height,
       padding: actionBarPadding,
     };
@@ -131,10 +144,7 @@ const LayoutEngine = ({ layoutType }) => {
   };
 
   const calculatesSidebarNavWidth = () => {
-    const {
-      sidebarNavMinWidth,
-      sidebarNavMaxWidth,
-    } = DEFAULT_VALUES;
+    const { sidebarNavMinWidth, sidebarNavMaxWidth } = DEFAULT_VALUES;
 
     const { isOpen, width: sidebarNavWidth } = sidebarNavigationInput;
 
@@ -148,9 +158,15 @@ const LayoutEngine = ({ layoutType }) => {
         maxWidth = windowWidth();
       } else {
         if (sidebarNavWidth === 0) {
-          width = min(max((windowWidth() * 0.2), sidebarNavMinWidth), sidebarNavMaxWidth);
+          width = min(
+            max(windowWidth() * 0.2, sidebarNavMinWidth),
+            sidebarNavMaxWidth
+          );
         } else {
-          width = min(max(sidebarNavWidth, sidebarNavMinWidth), sidebarNavMaxWidth);
+          width = min(
+            max(sidebarNavWidth, sidebarNavMinWidth),
+            sidebarNavMaxWidth
+          );
         }
         minWidth = sidebarNavMinWidth;
         maxWidth = sidebarNavMaxWidth;
@@ -196,10 +212,7 @@ const LayoutEngine = ({ layoutType }) => {
   };
 
   const calculatesSidebarContentWidth = () => {
-    const {
-      sidebarContentMinWidth,
-      sidebarContentMaxWidth,
-    } = DEFAULT_VALUES;
+    const { sidebarContentMinWidth, sidebarContentMaxWidth } = DEFAULT_VALUES;
 
     const { isOpen, width: sidebarContentWidth } = sidebarContentInput;
 
@@ -215,11 +228,14 @@ const LayoutEngine = ({ layoutType }) => {
       } else {
         if (sidebarContentWidth === 0) {
           width = min(
-            max((windowWidth() * 0.2), sidebarContentMinWidth), sidebarContentMaxWidth,
+            max(windowWidth() * 0.2, sidebarContentMinWidth),
+            sidebarContentMaxWidth
           );
         } else {
-          width = min(max(sidebarContentWidth, sidebarContentMinWidth),
-            sidebarContentMaxWidth);
+          width = min(
+            max(sidebarContentWidth, sidebarContentMinWidth),
+            sidebarContentMaxWidth
+          );
         }
         minWidth = sidebarContentMinWidth;
         maxWidth = sidebarContentMaxWidth;
@@ -268,7 +284,8 @@ const LayoutEngine = ({ layoutType }) => {
 
     return {
       width,
-      height: windowHeight() - (navBarHeight + actionBarHeight + bannerAreaHeight()),
+      height:
+        windowHeight() - (navBarHeight + actionBarHeight + bannerAreaHeight()),
       top: navBarHeight + bannerAreaHeight(),
       left,
     };

@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { smallOnly } from '/imports/ui/stylesheets/styled-components/breakpoints';
+import styled from "styled-components";
+import { smallOnly } from "/imports/ui/stylesheets/styled-components/breakpoints";
 import {
   borderSize,
   borderRadius,
   smPaddingY,
-} from '/imports/ui/stylesheets/styled-components/general';
+} from "/imports/ui/stylesheets/styled-components/general";
 import {
   colorText,
   colorGrayLighter,
@@ -13,16 +13,20 @@ import {
   colorLink,
   colorBlueLight,
   colorPrimary,
-} from '/imports/ui/stylesheets/styled-components/palette';
-import { fontSizeSmall } from '/imports/ui/stylesheets/styled-components/typography';
-import Modal from '/imports/ui/components/common/modal/simple/component';
-import Button from '/imports/ui/components/common/button/component';
+  colorGreen,
+  colorSuccess,
+} from "/imports/ui/stylesheets/styled-components/palette";
+import { fontSizeSmall } from "/imports/ui/stylesheets/styled-components/typography";
+import Modal from "/imports/ui/components/common/modal/simple/component";
+import Button from "/imports/ui/components/common/button/component";
 
 const UrlError = styled.div`
   color: red;
   padding: 1em 0 2.5em 0;
 
-  ${({ animations }) => animations && `
+  ${({ animations }) =>
+    animations &&
+    `
     transition: 1s;
   `}
 `;
@@ -80,14 +84,17 @@ const VideoUrl = styled.div`
     border: 1px solid ${colorGrayLighter};
     border-radius: ${borderRadius};
 
-    ${({ animations }) => animations && `
+    ${({ animations }) =>
+      animations &&
+      `
       transition: box-shadow .2s;
     `}
 
     &:focus {
       outline: none;
       border-radius: ${borderSize};
-      box-shadow: 0 0 0 ${borderSize} ${colorBlueLight}, inset 0 0 0 1px ${colorPrimary};
+      box-shadow: 0 0 0 ${borderSize} ${colorBlueLight},
+        inset 0 0 0 1px ${colorPrimary};
     }
   }
 
@@ -121,7 +128,7 @@ const StartButton = styled(Button)`
   position: absolute;
   bottom: 20px;
   color: ${colorWhite} !important;
-  background-color: ${colorLink} !important;
+  background-color: ${colorSuccess} !important;
 `;
 
 export default {

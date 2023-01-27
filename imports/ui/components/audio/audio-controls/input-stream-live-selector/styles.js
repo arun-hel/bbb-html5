@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import ButtonEmoji from '/imports/ui/components/common/button/button-emoji/ButtonEmoji';
+import styled from "styled-components";
+import ButtonEmoji from "/imports/ui/components/common/button/button-emoji/ButtonEmoji";
+import Button from "/imports/ui/components/common/button/component";
 
 const AudioDropdown = styled(ButtonEmoji)`
   span {
@@ -10,6 +11,27 @@ const AudioDropdown = styled(ButtonEmoji)`
   }
 `;
 
+const AudioBtn = styled(Button)`
+  ${({ isConnected }) =>
+    !isConnected
+      ? `
+      span {
+        box-shadow: none;
+        background-color: rgba(0,0,0,0.2) !important;
+      }
+   `
+      : `
+   span {
+     box-shadow: none;
+     background-color: #018752 !important;
+   }
+   span > i {
+    color: #ffff !important;
+   }
+`}
+`;
+
 export default {
   AudioDropdown,
+  AudioBtn,
 };

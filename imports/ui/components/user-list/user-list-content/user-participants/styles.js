@@ -1,14 +1,20 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { FlexColumn } from '/imports/ui/stylesheets/styled-components/placeholders';
-import Styled from '/imports/ui/components/user-list/styles';
-import StyledContent from '/imports/ui/components/user-list/user-list-content/styles';
+import { FlexColumn } from "/imports/ui/stylesheets/styled-components/placeholders";
+import Styled from "/imports/ui/components/user-list/styles";
+import StyledContent from "/imports/ui/components/user-list/user-list-content/styles";
 import {
   ScrollboxVertical,
   VirtualizedScrollboxVertical,
-} from '/imports/ui/stylesheets/styled-components/scrollable';
-import { borderSize, mdPaddingY } from '/imports/ui/stylesheets/styled-components/general';
-import { colorPrimary, userListBg } from '/imports/ui/stylesheets/styled-components/palette';
+} from "/imports/ui/stylesheets/styled-components/scrollable";
+import {
+  borderSize,
+  mdPaddingY,
+} from "/imports/ui/stylesheets/styled-components/general";
+import {
+  colorPrimary,
+  userListBg,
+} from "/imports/ui/stylesheets/styled-components/palette";
 
 const Container = styled(StyledContent.Container)``;
 
@@ -22,11 +28,20 @@ const UserListColumn = styled(FlexColumn)`
 `;
 
 const VirtualizedScrollableList = styled(ScrollboxVertical)`
-  background: linear-gradient(${userListBg} 30%, rgba(255,255,255,0)),
-    linear-gradient(rgba(255,255,255,0), ${userListBg} 70%) 0 100%,
+  background: linear-gradient(${userListBg} 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(rgba(255, 255, 255, 0), ${userListBg} 70%) 0 100%,
     /* Shadows */
-    radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)),
-    radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
+      radial-gradient(
+        farthest-side at 50% 0,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      ),
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      )
+      0 100%;
 
   > div {
     outline: none;
@@ -63,11 +78,20 @@ const VirtualizedScrollableList = styled(ScrollboxVertical)`
 `;
 
 const VirtualizedList = styled(VirtualizedScrollboxVertical)`
-  background: linear-gradient(#f3f6f9 30%, rgba(255,255,255,0)),
-    linear-gradient(rgba(255,255,255,0), #f3f6f9 70%) 0 100%,
+  background: linear-gradient(#f3f6f9 30%, rgba(255, 255, 255, 0)),
+    linear-gradient(rgba(255, 255, 255, 0), #f3f6f9 70%) 0 100%,
     /* Shadows */
-    radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)),
-    radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%;
+      radial-gradient(
+        farthest-side at 50% 0,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      ),
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0)
+      )
+      0 100%;
 
   outline: none;
 `;

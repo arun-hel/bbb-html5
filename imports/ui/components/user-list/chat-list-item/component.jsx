@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { defineMessages, injectIntl } from 'react-intl';
-import _ from 'lodash';
-import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
-import Styled from './styles';
-import UserAvatar from '/imports/ui/components/user-avatar/component';
-import { ACTIONS, PANELS } from '../../layout/enums';
-import Icon from '/imports/ui/components/common/icon/component';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { defineMessages, injectIntl } from "react-intl";
+import _ from "lodash";
+import withShortcutHelper from "/imports/ui/components/shortcut-help/service";
+import Styled from "./styles";
+import UserAvatar from "/imports/ui/components/user-avatar/component";
+import { ACTIONS, PANELS } from "../../layout/enums";
+import Icon from "/imports/ui/components/common/icon/component";
+import { layoutDispatch } from "../../layout/context";
 
 const DEBOUNCE_TIME = 1000;
 const CHAT_CONFIG = Meteor.settings.public.chat;
@@ -14,22 +15,26 @@ const PUBLIC_CHAT_KEY = CHAT_CONFIG.public_id;
 
 let globalAppplyStateToProps = () => {};
 
-const throttledFunc = _.debounce(() => {
-  globalAppplyStateToProps();
-}, DEBOUNCE_TIME, { trailing: true, leading: true });
+const throttledFunc = _.debounce(
+  () => {
+    globalAppplyStateToProps();
+  },
+  DEBOUNCE_TIME,
+  { trailing: true, leading: true }
+);
 
 const intlMessages = defineMessages({
   titlePublic: {
-    id: 'app.chat.titlePublic',
-    description: 'title for public chat',
+    id: "app.chat.titlePublic",
+    description: "title for public chat",
   },
   unreadPlural: {
-    id: 'app.userList.chatListItem.unreadPlural',
-    description: 'singular aria label for new message',
+    id: "app.userList.chatListItem.unreadPlural",
+    description: "singular aria label for new message",
   },
   unreadSingular: {
-    id: 'app.userList.chatListItem.unreadSingular',
-    description: 'plural aria label for new messages',
+    id: "app.userList.chatListItem.unreadSingular",
+    description: "plural aria label for new messages",
   },
 });
 
@@ -50,7 +55,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  shortcuts: '',
+  shortcuts: "",
 };
 
 const ChatListItem = (props) => {
@@ -68,18 +73,25 @@ const ChatListItem = (props) => {
     layoutContextDispatch,
   } = props;
 
-  const chatPanelOpen = sidebarContentIsOpen && sidebarContentPanel === PANELS.CHAT;
+  const chatPanelOpen =
+    sidebarContentIsOpen && sidebarContentPanel === PANELS.CHAT;
 
   const isCurrentChat = chat.chatId === activeChatId && chatPanelOpen;
 
   const [stateUreadCount, setStateUreadCount] = useState(0);
 
-  if (chat.unreadCounter !== stateUreadCount && (stateUreadCount < chat.unreadCounter)) {
+  if (
+    chat.unreadCounter !== stateUreadCount &&
+    stateUreadCount < chat.unreadCounter
+  ) {
     globalAppplyStateToProps = () => {
       setStateUreadCount(chat.unreadCounter);
     };
     throttledFunc();
-  } else if (chat.unreadCounter !== stateUreadCount && (stateUreadCount > chat.unreadCounter)) {
+  } else if (
+    chat.unreadCounter !== stateUreadCount &&
+    stateUreadCount > chat.unreadCounter
+  ) {
     setStateUreadCount(chat.unreadCounter);
   }
 
@@ -92,6 +104,7 @@ const ChatListItem = (props) => {
     }
   }, [idChatOpen, sidebarContentIsOpen, sidebarContentPanel, chat]);
 
+  const chatLayout = layoutDispatch();
   const handleClickToggleChat = () => {
     // Verify if chat panel is open
 
@@ -107,7 +120,7 @@ const ChatListItem = (props) => {
         });
         layoutContextDispatch({
           type: ACTIONS.SET_ID_CHAT_OPEN,
-          value: '',
+          value: "",
         });
       } else {
         layoutContextDispatch({
@@ -124,7 +137,7 @@ const ChatListItem = (props) => {
         type: ACTIONS.SET_SIDEBAR_CONTENT_PANEL,
         value: PANELS.CHAT,
       });
-      layoutContextDispatch({
+      chatLayout({
         type: ACTIONS.SET_ID_CHAT_OPEN,
         value: chat.chatId,
       });
@@ -138,7 +151,8 @@ const ChatListItem = (props) => {
   const arialabel = `${localizedChatName} ${
     stateUreadCount > 1
       ? intl.formatMessage(intlMessages.unreadPlural, { 0: stateUreadCount })
-      : intl.formatMessage(intlMessages.unreadSingular)}`;
+      : intl.formatMessage(intlMessages.unreadSingular)
+  }`;
 
   return (
     <Styled.ChatListItem
@@ -150,44 +164,45 @@ const ChatListItem = (props) => {
       accessKey={isPublicChat(chat) ? TOGGLE_CHAT_PUB_AK : null}
       onClick={handleClickToggleChat}
       id="chat-toggle-button"
-      aria-label={isPublicChat(chat) ? intl.formatMessage(intlMessages.titlePublic) : chat.name}
+      aria-label={
+        isPublicChat(chat)
+          ? intl.formatMessage(intlMessages.titlePublic)
+          : chat.name
+      }
       onKeyPress={() => {}}
     >
       <Styled.ChatListItemLink>
         <Styled.ChatIcon>
-          {chat.icon
-            ? (
-              <Styled.ChatThumbnail>
-                <Icon iconName={chat.icon} />
-              </Styled.ChatThumbnail>
-            ) : (
-              <UserAvatar
-                moderator={chat.isModerator}
-                avatar={chat.avatar}
-                color={chat.color}
-              >
-                {chat.name.toLowerCase().slice(0, 2)}
-              </UserAvatar>
-            )}
+          {chat.icon ? (
+            <Styled.ChatThumbnail>
+              <Icon iconName={chat.icon} />
+            </Styled.ChatThumbnail>
+          ) : (
+            <UserAvatar
+              moderator={chat.isModerator}
+              avatar={chat.avatar}
+              color={chat.color}
+            >
+              {chat.name.toLowerCase().slice(0, 2)}
+            </UserAvatar>
+          )}
         </Styled.ChatIcon>
         <Styled.ChatName aria-live="off">
-          {!compact
-            ? (
-              <Styled.ChatNameMain>
-                {isPublicChat(chat)
-                  ? intl.formatMessage(intlMessages.titlePublic) : chat.name}
-              </Styled.ChatNameMain>
-            ) : null}
+          {!compact ? (
+            <Styled.ChatNameMain>
+              {isPublicChat(chat)
+                ? intl.formatMessage(intlMessages.titlePublic)
+                : chat.name}
+            </Styled.ChatNameMain>
+          ) : null}
         </Styled.ChatName>
-        {(stateUreadCount > 0)
-          ? (
-            <Styled.UnreadMessages aria-label={arialabel}>
-              <Styled.UnreadMessagesText aria-hidden="true">
-                {stateUreadCount}
-              </Styled.UnreadMessagesText>
-            </Styled.UnreadMessages>
-          )
-          : null}
+        {stateUreadCount > 0 ? (
+          <Styled.UnreadMessages aria-label={arialabel}>
+            <Styled.UnreadMessagesText aria-hidden="true">
+              {stateUreadCount}
+            </Styled.UnreadMessagesText>
+          </Styled.UnreadMessages>
+        ) : null}
       </Styled.ChatListItemLink>
     </Styled.ChatListItem>
   );
@@ -196,4 +211,4 @@ const ChatListItem = (props) => {
 ChatListItem.propTypes = propTypes;
 ChatListItem.defaultProps = defaultProps;
 
-export default withShortcutHelper(injectIntl(ChatListItem), 'togglePublicChat');
+export default withShortcutHelper(injectIntl(ChatListItem), "togglePublicChat");

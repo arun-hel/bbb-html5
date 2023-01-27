@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Styled from './styles';
-import TooltipContainer from '/imports/ui/components/common/tooltip/container';
+import React from "react";
+import PropTypes from "prop-types";
+import Styled from "./styles";
+import TooltipContainer from "/imports/ui/components/common/tooltip/container";
 
 const propTypes = {
   /**
@@ -27,32 +27,22 @@ const propTypes = {
 };
 
 const defaultProps = {
-  emoji: '',
-  label: '',
+  emoji: "",
+  label: "",
   onKeyDown: null,
   onFocus: null,
   tabIndex: -1,
   hideLabel: false,
   onClick: null,
-  className: '',
+  className: "",
 };
 
 const ButtonEmoji = (props) => {
-  const {
-    hideLabel,
-    className,
-    hidden,
-    ...newProps
-  } = props;
+  const { hideLabel, className, hidden, ...newProps } = props;
 
-  const {
-    emoji,
-    label,
-    tabIndex,
-    onClick,
-  } = newProps;
+  const { emoji, label, tabIndex, onClick } = newProps;
 
-  const IconComponent = (<Styled.EmojiButtonIcon iconName={emoji} />);
+  const IconComponent = <Styled.EmojiButtonIcon iconName={emoji} />;
 
   return (
     <span>
@@ -66,8 +56,8 @@ const ButtonEmoji = (props) => {
           onClick={onClick}
         >
           <Styled.Label>
-            { !hideLabel && label }
-            { IconComponent }
+            {!hideLabel && label}
+            {IconComponent}
           </Styled.Label>
         </Styled.EmojiButton>
       </TooltipContainer>

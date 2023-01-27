@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
-import fastdom from 'fastdom';
-import { injectIntl } from 'react-intl';
-import ChatLogger from '/imports/ui/components/chat/chat-logger/ChatLogger';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import _ from "lodash";
+import fastdom from "fastdom";
+import { injectIntl } from "react-intl";
+import ChatLogger from "/imports/ui/components/chat/chat-logger/ChatLogger";
 
 const propTypes = {
   text: PropTypes.string.isRequired,
@@ -19,19 +19,16 @@ const defaultProps = {
   scrollArea: undefined,
 };
 
-const eventsToBeBound = [
-  'scroll',
-  'resize',
-];
+const eventsToBeBound = ["scroll", "resize"];
 
 const isElementInViewport = (el) => {
   if (!el) return false;
   const rect = el.getBoundingClientRect();
 
   return (
-    rect.top >= 0
+    rect.top >= 0 ||
     // This condition is for large messages that are bigger than client height
-    || rect.top + rect.height >= 0
+    rect.top + rect.height >= 0
   );
 };
 
@@ -41,7 +38,10 @@ class MessageChatItem extends PureComponent {
 
     this.ticking = false;
 
-    this.handleMessageInViewport = _.debounce(this.handleMessageInViewport.bind(this), 50);
+    this.handleMessageInViewport = _.debounce(
+      this.handleMessageInViewport.bind(this),
+      50
+    );
   }
 
   componentDidMount() {
@@ -49,8 +49,16 @@ class MessageChatItem extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    ChatLogger.debug('MessageChatItem::componentDidUpdate::props', { ...this.props }, { ...prevProps });
-    ChatLogger.debug('MessageChatItem::componentDidUpdate::state', { ...this.state }, { ...prevState });
+    ChatLogger.debug(
+      "MessageChatItem::componentDidUpdate::props",
+      { ...this.props },
+      { ...prevProps }
+    );
+    ChatLogger.debug(
+      "MessageChatItem::componentDidUpdate::state",
+      { ...this.state },
+      { ...prevState }
+    );
     this.listenToUnreadMessages();
   }
 
@@ -60,18 +68,16 @@ class MessageChatItem extends PureComponent {
     // if (!lastReadMessageTime > time) {
     //  return;
     // }
-    ChatLogger.debug('MessageChatItem::componentWillUnmount', this.props);
+    ChatLogger.debug("MessageChatItem::componentWillUnmount", this.props);
     this.removeScrollListeners();
   }
 
   addScrollListeners() {
-    const {
-      scrollArea,
-    } = this.props;
+    const { scrollArea } = this.props;
 
     if (scrollArea) {
-      eventsToBeBound.forEach(
-        e => scrollArea.addEventListener(e, this.handleMessageInViewport),
+      eventsToBeBound.forEach((e) =>
+        scrollArea.addEventListener(e, this.handleMessageInViewport)
       );
     }
   }
@@ -80,11 +86,7 @@ class MessageChatItem extends PureComponent {
     if (!this.ticking) {
       fastdom.measure(() => {
         const node = this.text;
-        const {
-          handleReadMessage,
-          time,
-          read,
-        } = this.props;
+        const { handleReadMessage, time, read } = this.props;
 
         if (read) {
           this.removeScrollListeners();
@@ -104,14 +106,11 @@ class MessageChatItem extends PureComponent {
   }
 
   removeScrollListeners() {
-    const {
-      scrollArea,
-      read,
-    } = this.props;
+    const { scrollArea, read } = this.props;
 
     if (scrollArea && !read) {
-      eventsToBeBound.forEach(
-        e => scrollArea.removeEventListener(e, this.handleMessageInViewport),
+      eventsToBeBound.forEach((e) =>
+        scrollArea.removeEventListener(e, this.handleMessageInViewport)
       );
     }
   }
@@ -119,11 +118,7 @@ class MessageChatItem extends PureComponent {
   // depending on whether the message is in viewport or not,
   // either read it or attach a listener
   listenToUnreadMessages() {
-    const {
-      handleReadMessage,
-      time,
-      read,
-    } = this.props;
+    const { handleReadMessage, time, read } = this.props;
 
     if (read) {
       return;
@@ -132,16 +127,15 @@ class MessageChatItem extends PureComponent {
     const node = this.text;
 
     fastdom.measure(() => {
-      const {
-        read: newRead,
-      } = this.props;
+      const { read: newRead } = this.props;
       // this function is called after so we need to get the updated lastReadMessageTime
 
       if (newRead) {
         return;
       }
 
-      if (isElementInViewport(node)) { // no need to listen, the message is already in viewport
+      if (isElementInViewport(node)) {
+        // no need to listen, the message is already in viewport
         handleReadMessage(time);
       } else {
         this.addScrollListeners();
@@ -159,13 +153,15 @@ class MessageChatItem extends PureComponent {
       systemMessageType,
       color,
     } = this.props;
-    ChatLogger.debug('MessageChatItem::render', this.props);
-    if (type === 'poll') {
+    ChatLogger.debug("MessageChatItem::render", this.props);
+    if (type === "poll") {
       return (
         <p
           className={className}
-          style={{ borderLeft: `3px ${color} solid`, whiteSpace: 'pre-wrap' }}
-          ref={(ref) => { this.text = ref; }}
+          style={{ borderLeft: `3px ${color} solid`, whiteSpace: "pre-wrap" }}
+          ref={(ref) => {
+            this.text = ref;
+          }}
           dangerouslySetInnerHTML={{ __html: text }}
           data-test="chatPollMessageText"
         />
@@ -174,9 +170,17 @@ class MessageChatItem extends PureComponent {
       return (
         <p
           className={className}
-          ref={(ref) => { this.text = ref; }}
+          ref={(ref) => {
+            this.text = ref;
+          }}
           dangerouslySetInnerHTML={{ __html: text }}
-          data-test={isSystemMessage ? systemMessageType : chatUserMessageItem ? 'chatUserMessageText' : ''}
+          data-test={
+            isSystemMessage
+              ? systemMessageType
+              : chatUserMessageItem
+              ? "chatUserMessageText"
+              : ""
+          }
         />
       );
     }

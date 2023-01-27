@@ -1,20 +1,20 @@
-import React, { useReducer } from 'react';
-import { createContext, useContextSelector } from 'use-context-selector';
-import PropTypes from 'prop-types';
-import { ACTIONS } from '/imports/ui/components/layout/enums';
-import DEFAULT_VALUES from '/imports/ui/components/layout/defaultValues';
-import { INITIAL_INPUT_STATE, INITIAL_OUTPUT_STATE } from './initState';
+import React, { useReducer } from "react";
+import { createContext, useContextSelector } from "use-context-selector";
+import PropTypes from "prop-types";
+import { ACTIONS } from "/imports/ui/components/layout/enums";
+import DEFAULT_VALUES from "/imports/ui/components/layout/defaultValues";
+import { INITIAL_INPUT_STATE, INITIAL_OUTPUT_STATE } from "./initState";
 
 // variable to debug in console log
 const debug = false;
 
 const debugActions = (action, value) => {
   const baseStyles = [
-    'color: #fff',
-    'background-color: #d64541',
-    'padding: 2px 4px',
-    'border-radius: 2px',
-  ].join(';');
+    "color: #fff",
+    "background-color: #ddf1ea",
+    "padding: 2px 4px",
+    "border-radius: 2px",
+  ].join(";");
   return debug && console.log(`%c${action}`, baseStyles, value);
 };
 
@@ -34,8 +34,8 @@ const initState = {
   fontSize: DEFAULT_VALUES.fontSize,
   idChatOpen: DEFAULT_VALUES.idChatOpen,
   fullscreen: {
-    element: '',
-    group: '',
+    element: "",
+    group: "",
   },
   input: INITIAL_INPUT_STATE,
   output: INITIAL_OUTPUT_STATE,
@@ -117,8 +117,7 @@ const reducer = (state, action) => {
     case ACTIONS.SET_BROWSER_SIZE: {
       const { width, height } = action.value;
       const { browser } = state.input;
-      if (browser.width === width
-        && browser.height === height) {
+      if (browser.width === width && browser.height === height) {
         return state;
       }
       return {
@@ -171,17 +170,18 @@ const reducer = (state, action) => {
 
     // NAV BAR
     case ACTIONS.SET_NAVBAR_OUTPUT: {
-      const {
-        display, width, height, top, left, tabOrder, zIndex,
-      } = action.value;
+      const { display, width, height, top, left, tabOrder, zIndex } =
+        action.value;
       const { navBar } = state.output;
-      if (navBar.display === display
-        && navBar.width === width
-        && navBar.height === height
-        && navBar.top === top
-        && navBar.left === left
-        && navBar.zIndex === zIndex
-        && navBar.tabOrder === tabOrder) {
+      if (
+        navBar.display === display &&
+        navBar.width === width &&
+        navBar.height === height &&
+        navBar.top === top &&
+        navBar.left === left &&
+        navBar.zIndex === zIndex &&
+        navBar.tabOrder === tabOrder
+      ) {
         return state;
       }
       return {
@@ -205,18 +205,28 @@ const reducer = (state, action) => {
     // ACTION BAR
     case ACTIONS.SET_ACTIONBAR_OUTPUT: {
       const {
-        display, width, height, innerHeight, top, left, padding, tabOrder, zIndex,
+        display,
+        width,
+        height,
+        innerHeight,
+        top,
+        left,
+        padding,
+        tabOrder,
+        zIndex,
       } = action.value;
       const { actionBar } = state.output;
-      if (actionBar.display === display
-        && actionBar.width === width
-        && actionBar.height === height
-        && actionBar.innerHeight === innerHeight
-        && actionBar.top === top
-        && actionBar.left === left
-        && actionBar.padding === padding
-        && actionBar.zIndex === zIndex
-        && actionBar.tabOrder === tabOrder) {
+      if (
+        actionBar.display === display &&
+        actionBar.width === width &&
+        actionBar.height === height &&
+        actionBar.innerHeight === innerHeight &&
+        actionBar.top === top &&
+        actionBar.left === left &&
+        actionBar.padding === padding &&
+        actionBar.zIndex === zIndex &&
+        actionBar.tabOrder === tabOrder
+      ) {
         return state;
       }
       return {
@@ -241,13 +251,13 @@ const reducer = (state, action) => {
 
     // CAPTIONS
     case ACTIONS.SET_CAPTIONS_OUTPUT: {
-      const {
-        left, right, maxWidth,
-      } = action.value;
+      const { left, right, maxWidth } = action.value;
       const { captions } = state.output;
-      if (captions.left === left
-        && captions.right === right
-        && captions.maxWidth === maxWidth) {
+      if (
+        captions.left === left &&
+        captions.right === right &&
+        captions.maxWidth === maxWidth
+      ) {
         return state;
       }
       return {
@@ -283,6 +293,7 @@ const reducer = (state, action) => {
     }
     case ACTIONS.SET_SIDEBAR_NAVIGATION_PANEL: {
       const { sidebarNavigation } = state.input;
+
       if (sidebarNavigation.sidebarNavPanel === action.value) {
         return state;
       }
@@ -297,11 +308,14 @@ const reducer = (state, action) => {
         },
       };
     }
+
     case ACTIONS.SET_SIDEBAR_NAVIGATION_SIZE: {
       const { width, browserWidth } = action.value;
       const { sidebarNavigation } = state.input;
-      if (sidebarNavigation.width === width
-        && sidebarNavigation.browserWidth === browserWidth) {
+      if (
+        sidebarNavigation.width === width &&
+        sidebarNavigation.browserWidth === browserWidth
+      ) {
         return state;
       }
       return {
@@ -333,19 +347,21 @@ const reducer = (state, action) => {
         zIndex,
       } = action.value;
       const { sidebarNavigation } = state.output;
-      if (sidebarNavigation.display === display
-        && sidebarNavigation.minWidth === minWidth
-        && sidebarNavigation.maxWidth === maxWidth
-        && sidebarNavigation.width === width
-        && sidebarNavigation.minHeight === minHeight
-        && sidebarNavigation.height === height
-        && sidebarNavigation.maxHeight === maxHeight
-        && sidebarNavigation.top === top
-        && sidebarNavigation.left === left
-        && sidebarNavigation.right === right
-        && sidebarNavigation.tabOrder === tabOrder
-        && sidebarNavigation.zIndex === zIndex
-        && sidebarNavigation.isResizable === isResizable) {
+      if (
+        sidebarNavigation.display === display &&
+        sidebarNavigation.minWidth === minWidth &&
+        sidebarNavigation.maxWidth === maxWidth &&
+        sidebarNavigation.width === width &&
+        sidebarNavigation.minHeight === minHeight &&
+        sidebarNavigation.height === height &&
+        sidebarNavigation.maxHeight === maxHeight &&
+        sidebarNavigation.top === top &&
+        sidebarNavigation.left === left &&
+        sidebarNavigation.right === right &&
+        sidebarNavigation.tabOrder === tabOrder &&
+        sidebarNavigation.zIndex === zIndex &&
+        sidebarNavigation.isResizable === isResizable
+      ) {
         return state;
       }
       return {
@@ -372,14 +388,14 @@ const reducer = (state, action) => {
       };
     }
     case ACTIONS.SET_SIDEBAR_NAVIGATION_RESIZABLE_EDGE: {
-      const {
-        top, right, bottom, left,
-      } = action.value;
+      const { top, right, bottom, left } = action.value;
       const { sidebarNavigation } = state.output;
-      if (sidebarNavigation.resizableEdge.top === top
-        && sidebarNavigation.resizableEdge.right === right
-        && sidebarNavigation.resizableEdge.bottom === bottom
-        && sidebarNavigation.resizableEdge.left === left) {
+      if (
+        sidebarNavigation.resizableEdge.top === top &&
+        sidebarNavigation.resizableEdge.right === right &&
+        sidebarNavigation.resizableEdge.bottom === bottom &&
+        sidebarNavigation.resizableEdge.left === left
+      ) {
         return state;
       }
       return {
@@ -402,11 +418,14 @@ const reducer = (state, action) => {
     // SIDEBAR CONTENT
     case ACTIONS.SET_SIDEBAR_CONTENT_IS_OPEN: {
       const { sidebarContent, sidebarNavigation } = state.input;
+
       if (sidebarContent.isOpen === action.value) {
         return state;
       }
       // When opening content sidebar, the navigation sidebar should be opened as well
       if (action.value === true) sidebarNavigation.isOpen = true;
+      if (action.value === "onlyChat") sidebarNavigation.isOpen = false;
+
       return {
         ...state,
         input: {
@@ -436,17 +455,14 @@ const reducer = (state, action) => {
       };
     }
     case ACTIONS.SET_SIDEBAR_CONTENT_SIZE: {
-      const {
-        width,
-        browserWidth,
-        height,
-        browserHeight,
-      } = action.value;
+      const { width, browserWidth, height, browserHeight } = action.value;
       const { sidebarContent } = state.input;
-      if (sidebarContent.width === width
-        && sidebarContent.browserWidth === browserWidth
-        && sidebarContent.height === height
-        && sidebarContent.browserHeight === browserHeight) {
+      if (
+        sidebarContent.width === width &&
+        sidebarContent.browserWidth === browserWidth &&
+        sidebarContent.height === height &&
+        sidebarContent.browserHeight === browserHeight
+      ) {
         return state;
       }
       return {
@@ -481,19 +497,21 @@ const reducer = (state, action) => {
         zIndex,
       } = action.value;
       const { sidebarContent } = state.output;
-      if (sidebarContent.display === display
-        && sidebarContent.minWidth === minWidth
-        && sidebarContent.width === width
-        && sidebarContent.maxWidth === maxWidth
-        && sidebarContent.minHeight === minHeight
-        && sidebarContent.height === height
-        && sidebarContent.maxHeight === maxHeight
-        && sidebarContent.top === top
-        && sidebarContent.left === left
-        && sidebarContent.right === right
-        && sidebarContent.tabOrder === tabOrder
-        && sidebarContent.zIndex === zIndex
-        && sidebarContent.isResizable === isResizable) {
+      if (
+        sidebarContent.display === display &&
+        sidebarContent.minWidth === minWidth &&
+        sidebarContent.width === width &&
+        sidebarContent.maxWidth === maxWidth &&
+        sidebarContent.minHeight === minHeight &&
+        sidebarContent.height === height &&
+        sidebarContent.maxHeight === maxHeight &&
+        sidebarContent.top === top &&
+        sidebarContent.left === left &&
+        sidebarContent.right === right &&
+        sidebarContent.tabOrder === tabOrder &&
+        sidebarContent.zIndex === zIndex &&
+        sidebarContent.isResizable === isResizable
+      ) {
         return state;
       }
       return {
@@ -521,14 +539,14 @@ const reducer = (state, action) => {
       };
     }
     case ACTIONS.SET_SIDEBAR_CONTENT_RESIZABLE_EDGE: {
-      const {
-        top, right, bottom, left,
-      } = action.value;
+      const { top, right, bottom, left } = action.value;
       const { sidebarContent } = state.output;
-      if (sidebarContent.resizableEdge.top === top
-        && sidebarContent.resizableEdge.right === right
-        && sidebarContent.resizableEdge.bottom === bottom
-        && sidebarContent.resizableEdge.left === left) {
+      if (
+        sidebarContent.resizableEdge.top === top &&
+        sidebarContent.resizableEdge.right === right &&
+        sidebarContent.resizableEdge.bottom === bottom &&
+        sidebarContent.resizableEdge.left === left
+      ) {
         return state;
       }
       return {
@@ -552,8 +570,7 @@ const reducer = (state, action) => {
     case ACTIONS.SET_MEDIA_AREA_SIZE: {
       const { width, height } = action.value;
       const { mediaArea } = state.output;
-      if (mediaArea.width === width
-        && mediaArea.height === height) {
+      if (mediaArea.width === width && mediaArea.height === height) {
         return state;
       }
       return {
@@ -635,14 +652,14 @@ const reducer = (state, action) => {
       };
     }
     case ACTIONS.SET_CAMERA_DOCK_SIZE: {
-      const {
-        width, height, browserWidth, browserHeight,
-      } = action.value;
+      const { width, height, browserWidth, browserHeight } = action.value;
       const { cameraDock } = state.input;
-      if (cameraDock.width === width
-        && cameraDock.height === height
-        && cameraDock.browserWidth === browserWidth
-        && cameraDock.browserHeight === browserHeight) {
+      if (
+        cameraDock.width === width &&
+        cameraDock.height === height &&
+        cameraDock.browserWidth === browserWidth &&
+        cameraDock.browserHeight === browserHeight
+      ) {
         return state;
       }
       return {
@@ -663,8 +680,10 @@ const reducer = (state, action) => {
       const { width, height } = action.value;
       const { cameraDock } = state.input;
       const { cameraOptimalGridSize } = cameraDock;
-      if (cameraOptimalGridSize.width === width
-        && cameraOptimalGridSize.height === height) {
+      if (
+        cameraOptimalGridSize.width === width &&
+        cameraOptimalGridSize.height === height
+      ) {
         return state;
       }
       return {
@@ -701,20 +720,22 @@ const reducer = (state, action) => {
         zIndex,
       } = action.value;
       const { cameraDock } = state.output;
-      if (cameraDock.display === display
-        && cameraDock.position === position
-        && cameraDock.width === width
-        && cameraDock.maxWidth === maxWidth
-        && cameraDock.presenterMaxWidth === presenterMaxWidth
-        && cameraDock.height === height
-        && cameraDock.maxHeight === maxHeight
-        && cameraDock.top === top
-        && cameraDock.left === left
-        && cameraDock.right === right
-        && cameraDock.tabOrder === tabOrder
-        && cameraDock.isDraggable === isDraggable
-        && cameraDock.zIndex === zIndex
-        && cameraDock.resizableEdge === resizableEdge) {
+      if (
+        cameraDock.display === display &&
+        cameraDock.position === position &&
+        cameraDock.width === width &&
+        cameraDock.maxWidth === maxWidth &&
+        cameraDock.presenterMaxWidth === presenterMaxWidth &&
+        cameraDock.height === height &&
+        cameraDock.maxHeight === maxHeight &&
+        cameraDock.top === top &&
+        cameraDock.left === left &&
+        cameraDock.right === right &&
+        cameraDock.tabOrder === tabOrder &&
+        cameraDock.isDraggable === isDraggable &&
+        cameraDock.zIndex === zIndex &&
+        cameraDock.resizableEdge === resizableEdge
+      ) {
         return state;
       }
       return {
@@ -831,8 +852,10 @@ const reducer = (state, action) => {
       const { width, height } = action.value;
       const { presentation } = state.input;
       const { currentSlide } = presentation;
-      if (currentSlide.size.width === width
-        && currentSlide.size.height === height) {
+      if (
+        currentSlide.size.width === width &&
+        currentSlide.size.height === height
+      ) {
         return state;
       }
       return {
@@ -853,15 +876,15 @@ const reducer = (state, action) => {
       };
     }
     case ACTIONS.SET_PRESENTATION_RESIZABLE_EDGE: {
-      const {
-        top, right, bottom, left,
-      } = action.value;
+      const { top, right, bottom, left } = action.value;
       const { presentation } = state.output;
       const { resizableEdge } = presentation;
-      if (resizableEdge.top === top
-        && resizableEdge.right === right
-        && resizableEdge.bottom === bottom
-        && resizableEdge.left === left) {
+      if (
+        resizableEdge.top === top &&
+        resizableEdge.right === right &&
+        resizableEdge.bottom === bottom &&
+        resizableEdge.left === left
+      ) {
         return state;
       }
       return {
@@ -881,14 +904,14 @@ const reducer = (state, action) => {
       };
     }
     case ACTIONS.SET_PRESENTATION_SIZE: {
-      const {
-        width, height, browserWidth, browserHeight,
-      } = action.value;
+      const { width, height, browserWidth, browserHeight } = action.value;
       const { presentation } = state.input;
-      if (presentation.width === width
-        && presentation.height === height
-        && presentation.browserWidth === browserWidth
-        && presentation.browserHeight === browserHeight) {
+      if (
+        presentation.width === width &&
+        presentation.height === height &&
+        presentation.browserWidth === browserWidth &&
+        presentation.browserHeight === browserHeight
+      ) {
         return state;
       }
       return {
@@ -922,19 +945,21 @@ const reducer = (state, action) => {
         zIndex,
       } = action.value;
       const { presentation } = state.output;
-      if (presentation.display === display
-        && presentation.minWidth === minWidth
-        && presentation.width === width
-        && presentation.maxWidth === maxWidth
-        && presentation.minHeight === minHeight
-        && presentation.height === height
-        && presentation.maxHeight === maxHeight
-        && presentation.top === top
-        && presentation.left === left
-        && presentation.right === right
-        && presentation.tabOrder === tabOrder
-        && presentation.zIndex === zIndex
-        && presentation.isResizable === isResizable) {
+      if (
+        presentation.display === display &&
+        presentation.minWidth === minWidth &&
+        presentation.width === width &&
+        presentation.maxWidth === maxWidth &&
+        presentation.minHeight === minHeight &&
+        presentation.height === height &&
+        presentation.maxHeight === maxHeight &&
+        presentation.top === top &&
+        presentation.left === left &&
+        presentation.right === right &&
+        presentation.tabOrder === tabOrder &&
+        presentation.zIndex === zIndex &&
+        presentation.isResizable === isResizable
+      ) {
         return state;
       }
       return {
@@ -964,8 +989,10 @@ const reducer = (state, action) => {
     // FULLSCREEN
     case ACTIONS.SET_FULLSCREEN_ELEMENT: {
       const { fullscreen } = state;
-      if (fullscreen.element === action.value.element
-        && fullscreen.group === action.value.group) {
+      if (
+        fullscreen.element === action.value.element &&
+        fullscreen.group === action.value.group
+      ) {
         return state;
       }
       return {
@@ -995,14 +1022,14 @@ const reducer = (state, action) => {
       };
     }
     case ACTIONS.SET_SCREEN_SHARE_SIZE: {
-      const {
-        width, height, browserWidth, browserHeight,
-      } = action.value;
+      const { width, height, browserWidth, browserHeight } = action.value;
       const { screenShare } = state.input;
-      if (screenShare.width === width
-        && screenShare.height === height
-        && screenShare.browserWidth === browserWidth
-        && screenShare.browserHeight === browserHeight) {
+      if (
+        screenShare.width === width &&
+        screenShare.height === height &&
+        screenShare.browserWidth === browserWidth &&
+        screenShare.browserHeight === browserHeight
+      ) {
         return state;
       }
       return {
@@ -1020,21 +1047,16 @@ const reducer = (state, action) => {
       };
     }
     case ACTIONS.SET_SCREEN_SHARE_OUTPUT: {
-      const {
-        width,
-        height,
-        top,
-        left,
-        right,
-        zIndex,
-      } = action.value;
+      const { width, height, top, left, right, zIndex } = action.value;
       const { screenShare } = state.output;
-      if (screenShare.width === width
-        && screenShare.height === height
-        && screenShare.top === top
-        && screenShare.left === left
-        && screenShare.right === right
-        && screenShare.zIndex === zIndex) {
+      if (
+        screenShare.width === width &&
+        screenShare.height === height &&
+        screenShare.top === top &&
+        screenShare.left === left &&
+        screenShare.right === right &&
+        screenShare.zIndex === zIndex
+      ) {
         return state;
       }
       return {
@@ -1072,14 +1094,14 @@ const reducer = (state, action) => {
       };
     }
     case ACTIONS.SET_EXTERNAL_VIDEO_SIZE: {
-      const {
-        width, height, browserWidth, browserHeight,
-      } = action.value;
+      const { width, height, browserWidth, browserHeight } = action.value;
       const { externalVideo } = state.input;
-      if (externalVideo.width === width
-        && externalVideo.height === height
-        && externalVideo.browserWidth === browserWidth
-        && externalVideo.browserHeight === browserHeight) {
+      if (
+        externalVideo.width === width &&
+        externalVideo.height === height &&
+        externalVideo.browserWidth === browserWidth &&
+        externalVideo.browserHeight === browserHeight
+      ) {
         return state;
       }
       return {
@@ -1097,19 +1119,15 @@ const reducer = (state, action) => {
       };
     }
     case ACTIONS.SET_EXTERNAL_VIDEO_OUTPUT: {
-      const {
-        width,
-        height,
-        top,
-        left,
-        right,
-      } = action.value;
+      const { width, height, top, left, right } = action.value;
       const { externalVideo } = state.output;
-      if (externalVideo.width === width
-        && externalVideo.height === height
-        && externalVideo.top === top
-        && externalVideo.left === left
-        && externalVideo.right === right) {
+      if (
+        externalVideo.width === width &&
+        externalVideo.height === height &&
+        externalVideo.top === top &&
+        externalVideo.left === left &&
+        externalVideo.right === right
+      ) {
         return state;
       }
       return {
@@ -1128,21 +1146,20 @@ const reducer = (state, action) => {
       };
     }
     default: {
-      throw new Error('Unexpected action');
+      throw new Error("Unexpected action");
     }
   }
 };
 
 const LayoutContextProvider = (props) => {
-  const [layoutContextState, layoutContextDispatch] = useReducer(reducer, initState);
+  const [layoutContextState, layoutContextDispatch] = useReducer(
+    reducer,
+    initState
+  );
   const { children } = props;
   return (
-    <LayoutContextSelector.Provider value={
-      [
-        layoutContextState,
-        layoutContextDispatch,
-      ]
-    }
+    <LayoutContextSelector.Provider
+      value={[layoutContextState, layoutContextDispatch]}
     >
       {children}
     </LayoutContextSelector.Provider>
@@ -1151,16 +1168,22 @@ const LayoutContextProvider = (props) => {
 LayoutContextProvider.propTypes = providerPropTypes;
 
 const layoutSelect = (selector) => {
-  return useContextSelector(LayoutContextSelector, layout => selector(layout[0]));
+  return useContextSelector(LayoutContextSelector, (layout) =>
+    selector(layout[0])
+  );
 };
 const layoutSelectInput = (selector) => {
-  return useContextSelector(LayoutContextSelector, layout => selector(layout[0].input));
+  return useContextSelector(LayoutContextSelector, (layout) =>
+    selector(layout[0].input)
+  );
 };
 const layoutSelectOutput = (selector) => {
-  return useContextSelector(LayoutContextSelector, layout => selector(layout[0].output));
+  return useContextSelector(LayoutContextSelector, (layout) =>
+    selector(layout[0].output)
+  );
 };
 const layoutDispatch = () => {
-  return useContextSelector(LayoutContextSelector, layout => layout[1]);
+  return useContextSelector(LayoutContextSelector, (layout) => layout[1]);
 };
 
 export {
@@ -1169,4 +1192,4 @@ export {
   layoutSelectInput,
   layoutSelectOutput,
   layoutDispatch,
-}
+};

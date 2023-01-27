@@ -1,8 +1,8 @@
-import React from 'react';
-import { layoutDispatch, layoutSelectOutput } from '../layout/context';
-import SidebarNavigation from './component';
+import React from "react";
+import { layoutDispatch, layoutSelectOutput } from "../layout/context";
+import SidebarNavigation from "./component";
 
-const SidebarNavigationContainer = () => {
+const SidebarNavigationContainer = ({ handleUserListState }) => {
   const sidebarNavigation = layoutSelectOutput((i) => i.sidebarNavigation);
   const layoutContextDispatch = layoutDispatch();
 
@@ -12,6 +12,7 @@ const SidebarNavigationContainer = () => {
     <SidebarNavigation
       {...sidebarNavigation}
       contextDispatch={layoutContextDispatch}
+      handleUserListState={handleUserListState}
     />
   );
 };

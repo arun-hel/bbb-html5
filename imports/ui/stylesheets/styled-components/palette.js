@@ -1,27 +1,30 @@
-const colorWhite = 'var(--color-white, #FFF)';
-const colorOffWhite = 'var(--color-off-white, #F3F6F9)';
+const colorWhite = "var(--color-white, #FFF)";
+const colorOffWhite = "var(--color-off-white, #F3F6F9)";
 
-const colorBlack = 'var(--color-black, #000000)';
+const colorBlack = "var(--color-black, #000000)";
 
-const colorGray = 'var(--color-gray, #4E5A66)';
-const colorGrayDark = 'var(--color-gray-dark, #06172A)';
-const colorGrayLight = 'var(--color-gray-light, #8B9AA8)';
-const colorGrayLighter = 'var(--color-gray-lighter, #A7B3BD)';
-const colorGrayLightest = 'var(--color-gray-lightest, #D4D9DF)';
+const colorGray = "var(--color-gray, #4E5A66)";
+const colorGrayDark = "var(--color-gray-dark, #06172A)";
+const eduSityBackground = "#ddf1ea";
+const colorGrayLight = "var(--color-gray-light, #8B9AA8)";
+const colorGrayLighter = "var(--color-gray-lighter, #A7B3BD)";
+const colorGrayLightest = "var(--color-gray-lightest, #D4D9DF)";
 
-const colorBlueLight = 'var(--color-blue-light, #54a1f3)';
-const colorBlueLighter = 'var(--color-blue-lighter, #92BCEA)';
-const colorBlueLightest = 'var(--color-blue-lightest, #E4ECF2)';
+const colorBlueLight = "var(--color-blue-light, #54a1f3)";
+const colorBlueLighter = "var(--color-blue-lighter, #92BCEA)";
+const colorBlueLightest = "var(--color-blue-lightest, #E4ECF2)";
 
-const colorTransparent = 'var(--color-transparent, #ff000000)';
+const colorTransparent = "var(--color-transparent, #ff000000)";
+const colorGreen = "var(--color-green,#018752)";
 
-const colorPrimary = 'var(--color-primary, #0F70D7)';
-const colorDanger = 'var(--color-danger, #DF2721)';
-const colorSuccess = 'var(--color-success, #008081)';
-const colorWarning = 'var(--color-warning, purple)';
+// const colorPrimary = "var(--color-primary, #c9dcd5)";
+const colorPrimary = "var(--color-primary, #c9dcd5)";
+const colorDanger = "var(--color-danger, #DF2721)";
+const colorSuccess = "var(--color-success, #018752)";
+const colorWarning = "var(--color-warning, purple)";
 const colorOffline = `var(--color-offline, ${colorGrayLight})`;
-const colorMuted = 'var(--color-muted, #586571)';
-const colorMutedBackground = 'var(--color-muted-background, #F3F6F9)';
+const colorMuted = "var(--color-muted, #586571)";
+const colorMutedBackground = "var(--color-muted-background, #F3F6F9)";
 
 const colorBackground = `var(--color-background, ${colorGrayDark})`;
 const colorOverlay = `var(--color-overlay, rgba(6, 23, 42, 0.75))`;
@@ -33,8 +36,8 @@ const colorGrayLabel = `var(--color-gray-label, ${colorGray})`;
 const colorText = `var(--color-text, ${colorGray})`;
 const colorLink = `var(--color-link, ${colorPrimary})`;
 
-const listItemBgHover = 'var(--list-item-bg-hover, #DCE4ED)';
-const colorTipBg = 'var(--color-tip-bg, #333333)';
+const listItemBgHover = "var(--list-item-bg-hover, #DCE4ED)";
+const colorTipBg = "var(--color-tip-bg, #333333)";
 const itemFocusBorder = `var(--item-focus-border, ${colorBlueLighter})`;
 
 const btnDefaultColor = `var(--btn-default-color, ${colorGray})`;
@@ -74,31 +77,34 @@ const userThumbnailBorder = `var(--user-thumbnail-border, ${colorGrayLight})`;
 const loaderBg = `var(--loader-bg, ${colorGrayDark})`;
 const loaderBullet = `var(--loader-bullet, ${colorWhite})`;
 
-const systemMessageBackgroundColor = 'var(--system-message-background-color, #F9FBFC)';
-const systemMessageBorderColor = 'var(--system-message-border-color, #C5CDD4)';
+const systemMessageBackgroundColor =
+  "var(--system-message-background-color, #F9FBFC)";
+const systemMessageBorderColor = "var(--system-message-border-color, #C5CDD4)";
 const systemMessageFontColor = `var(--system-message-font-color, ${colorGrayDark})`;
-const highlightedMessageBackgroundColor = 'var(--system-message-background-color, #fef9f1)';
-const highlightedMessageBorderColor = 'var(--system-message-border-color, #f5c67f)';
+const highlightedMessageBackgroundColor =
+  "var(--system-message-background-color, #fef9f1)";
+const highlightedMessageBorderColor =
+  "var(--system-message-border-color, #f5c67f)";
 const colorHeading = `var(--color-heading, ${colorGrayDark})`;
-const palettePlaceholderText = 'var(--palette-placeholder-text, #787675)';
-const pollAnnotationGray = 'var(--poll-annotation-gray, #333333)';
+const palettePlaceholderText = "var(--palette-placeholder-text, #787675)";
+const pollAnnotationGray = "var(--poll-annotation-gray, #333333)";
 
 const toolbarButtonBorderColor = `var(--toolbar-button-border-color, ${colorGrayLighter})`;
 const toolbarListColor = `var(--toolbar-list-color, ${colorGray})`;
 const toolbarButtonBg = `var(--toolbar-button-bg, ${btnDefaultBg})`;
-const toolbarListBg = 'var(--toolbar-list-bg, #DDD)';
-const toolbarListBgFocus = 'var(--toolbar-list-bg-focus, #C6C6C6)';
-const colorContentBackground = 'var(--color-content-background, #1B2A3A)';
+const toolbarListBg = "var(--toolbar-list-bg, #DDD)";
+const toolbarListBgFocus = "var(--toolbar-list-bg-focus, #C6C6C6)";
+const colorContentBackground = "var(--color-content-background, #1B2A3A)";
 
 const dropdownBg = `var(--dropdown-bg, ${colorWhite})`;
 
-const pollStatsBorderColor = 'var(--poll-stats-border-color, #D4D9DF)';
+const pollStatsBorderColor = "var(--poll-stats-border-color, #D4D9DF)";
 const pollBlue = `var(--poll-blue, ${colorPrimary})`;
 
 const toastDefaultColor = `var(--toast-default-color, ${colorWhite})`;
 const toastDefaultBg = `var(--toast-default-bg, ${colorGray})`;
 
-const toastInfoColor = `var(--toast-info-color, ${colorWhite})`;
+const toastInfoColor = `var(--toast-info-color, ${colorGreen})`;
 const toastInfoBg = `var(--toast-info-bg, ${colorPrimary})`;
 
 const toastSuccessColor = `var(--toast-success-color, ${colorWhite})`;
@@ -193,4 +199,5 @@ export {
   toastErrorBg,
   toastWarningColor,
   toastWarningBg,
+  eduSityBackground,
 };

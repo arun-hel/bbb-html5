@@ -1,10 +1,14 @@
-import React, { useContext } from 'react';
-import SidebarContent from './component';
-import { layoutSelectInput, layoutSelectOutput, layoutDispatch } from '../layout/context';
-import { UsersContext } from '../components-data/users-context/context';
-import Auth from '/imports/ui/services/auth';
+import React, { useContext } from "react";
+import SidebarContent from "./component";
+import {
+  layoutSelectInput,
+  layoutSelectOutput,
+  layoutDispatch,
+} from "../layout/context";
+import { UsersContext } from "../components-data/users-context/context";
+import Auth from "/imports/ui/services/auth";
 
-const SidebarContentContainer = () => {
+const SidebarContentContainer = (props) => {
   const sidebarContentInput = layoutSelectInput((i) => i.sidebarContent);
   const sidebarContentOutput = layoutSelectOutput((i) => i.sidebarContent);
   const layoutContextDispatch = layoutDispatch();
@@ -18,6 +22,7 @@ const SidebarContentContainer = () => {
 
   return (
     <SidebarContent
+      {...props}
       {...sidebarContentOutput}
       contextDispatch={layoutContextDispatch}
       sidebarContentPanel={sidebarContentPanel}

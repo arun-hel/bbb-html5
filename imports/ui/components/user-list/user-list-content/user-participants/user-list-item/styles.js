@@ -1,25 +1,27 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 import {
   lgPaddingY,
   smPaddingY,
   borderSize,
   smPaddingX,
-} from '/imports/ui/stylesheets/styled-components/general';
+} from "/imports/ui/stylesheets/styled-components/general";
 import {
   listItemBgHover,
   itemFocusBorder,
   colorGray,
   colorGrayDark,
-} from '/imports/ui/stylesheets/styled-components/palette';
+} from "/imports/ui/stylesheets/styled-components/palette";
 
 const UserItemContents = styled.div`
   position: static;
-  padding: .45rem;
+  padding: 0.45rem;
   width: 100%;
-  margin-left: .5rem;
+  margin-left: 0.5rem;
 
-  ${({ selected }) => selected && `
+  ${({ selected }) =>
+    selected &&
+    `
     background-color: ${listItemBgHover};
     border-top-left-radius: ${smPaddingY};
     border-bottom-left-radius: ${smPaddingY};
@@ -29,7 +31,9 @@ const UserItemContents = styled.div`
     }
   `}
 
-  ${({ isActionsOpen }) => !isActionsOpen && `
+  ${({ isActionsOpen }) =>
+    !isActionsOpen &&
+    `
     display: flex;
     flex-flow: row;
     border-top-left-radius: 5px;
@@ -68,7 +72,9 @@ const UserItemContents = styled.div`
     flex-shrink: 0;
   `}
 
-  ${({ isActionsOpen }) => isActionsOpen && `
+  ${({ isActionsOpen }) =>
+    isActionsOpen &&
+    `
     outline: transparent;
     outline-width: ${borderSize};
     outline-style: solid;
@@ -86,9 +92,9 @@ const UserItemContents = styled.div`
 
 const SkeletonUserItemContents = styled.div`
   position: static;
-  padding: .45rem;
-  margin-left: .5rem;
-  margin-right: .5rem;
+  padding: 0.45rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   width: auto;
 `;
 
@@ -109,7 +115,7 @@ const UserAvatar = styled.div`
 
 const NoActionsListItem = styled.div`
   margin-left: 0.5rem;
-  padding: .45rem;
+  padding: 0.45rem;
   width: 100%;
 `;
 
@@ -122,7 +128,7 @@ const UserName = styled.div`
   justify-content: center;
   font-size: 90%;
 
-  [dir="rtl"]  & {
+  [dir="rtl"] & {
     margin: 0 ${smPaddingX} 0 0;
   }
 `;
@@ -145,8 +151,9 @@ const UserNameMain = styled.span`
   }
 
   &.animationsEnabled {
-    transition: all .3s;
-  }`;
+    transition: all 0.3s;
+  }
+`;
 
 const UserNameSub = styled.span`
   margin: 0;

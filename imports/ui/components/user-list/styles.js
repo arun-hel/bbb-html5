@@ -1,20 +1,26 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { FlexColumn } from '/imports/ui/stylesheets/styled-components/placeholders';
+import { FlexColumn } from "/imports/ui/stylesheets/styled-components/placeholders";
 import {
   userListBg,
   userListText,
   colorGray,
   listItemBgHover,
   itemFocusBorder,
-} from '/imports/ui/stylesheets/styled-components/palette';
-import { smPaddingX, borderSize } from '/imports/ui/stylesheets/styled-components/general';
+} from "/imports/ui/stylesheets/styled-components/palette";
+import {
+  smPaddingX,
+  borderSize,
+} from "/imports/ui/stylesheets/styled-components/general";
 
 const UserList = styled(FlexColumn)`
+  height: 100%;
+  @media only screen and (max-width: 650px) {
+    height: calc(100% - 100px) !important;
+  }
   justify-content: flex-start;
   background-color: ${userListBg};
   color: ${userListText};
-  height: 100%;
 `;
 
 const SmallTitle = styled.h2`
@@ -68,7 +74,8 @@ const ListItem = styled.div`
     outline-width: ${borderSize};
     outline-style: solid;
     background-color: ${listItemBgHover};
-    box-shadow: inset 0 0 0 ${borderSize} ${itemFocusBorder}, inset 1px 0 0 1px ${itemFocusBorder};
+    box-shadow: inset 0 0 0 ${borderSize} ${itemFocusBorder},
+      inset 1px 0 0 1px ${itemFocusBorder};
   }
 `;
 
