@@ -9,12 +9,14 @@ const propTypes = {
 };
 
 const defaultProps = {
+  // prependIconName: "fa-solid",
   prependIconName: "icon-bbb-",
 };
 
 const Icon = ({ className, prependIconName, iconName, ...props }) => (
   <i
     className={cx(className, [prependIconName, iconName].join(""))}
+    // className={cx([prependIconName, iconName].join(" "), className)}
     // ToastContainer from react-toastify passes a useless closeToast prop here
     {..._.omit(props, ["closeToast", "animations"])}
   />

@@ -177,7 +177,6 @@ class NavBar extends Component {
 
     const hasNotification = hasUnreadMessages || hasUnreadNotes;
 
-
     let ariaLabel = intl.formatMessage(intlMessages.toggleUserListAria);
     ariaLabel += hasNotification
       ? ` ${intl.formatMessage(intlMessages.newMessages)}`
@@ -259,7 +258,8 @@ class NavBar extends Component {
             {ConnectionStatusService.isEnabled() ? (
               <ConnectionStatusButton />
             ) : null}
-            <SettingsDropdownContainer amIModerator={amIModerator} />
+            {/* Remove settings dropdown from top  */}
+            {/* <SettingsDropdownContainer amIModerator={amIModerator} /> */}
           </Styled.Right>
         </Styled.Top>
         <Styled.Bottom>

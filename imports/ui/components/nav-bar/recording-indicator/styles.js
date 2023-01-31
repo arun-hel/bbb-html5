@@ -1,19 +1,28 @@
-import styled from 'styled-components';
-import { fontSizeLarge, fontSizeBase } from '/imports/ui/stylesheets/styled-components/typography';
+import styled from "styled-components";
+import {
+  fontSizeLarge,
+  fontSizeBase,
+} from "/imports/ui/stylesheets/styled-components/typography";
 import {
   smPaddingX,
   borderSize,
   borderSizeLarge,
   borderSizeSmall,
-} from '/imports/ui/stylesheets/styled-components/general';
-import { colorWhite, colorPrimary, colorGray } from '/imports/ui/stylesheets/styled-components/palette';
+} from "/imports/ui/stylesheets/styled-components/general";
+import {
+  colorWhite,
+  colorPrimary,
+  colorGray,
+} from "/imports/ui/stylesheets/styled-components/palette";
 
 const RecordingIndicatorIcon = styled.span`
   width: ${fontSizeLarge};
   height: ${fontSizeLarge};
   font-size: ${fontSizeBase};
 
-  ${({ titleMargin }) => titleMargin && `
+  ${({ titleMargin }) =>
+    titleMargin &&
+    `
     [dir="ltr"] & {
       margin-right: ${smPaddingX};
     }
@@ -24,12 +33,13 @@ const RecordingControl = styled.div`
   display: flex;
   border-radius: 2em 2em;
   align-items: center;
+  border: 1px solid green !important;
 
   span {
     border: none;
     box-shadow: none;
     background-color: transparent !important;
-    color: ${colorWhite} !important;
+    color: black !important;
   }
 
   &:hover {
@@ -41,8 +51,10 @@ const RecordingControl = styled.div`
     outline: none;
     box-shadow: 0 0 0 ${borderSize} ${colorPrimary};
   }
-  
-  ${({ recording }) => recording && `
+
+  ${({ recording }) =>
+    recording &&
+    `
     padding: 5px;
     background-color: ${colorPrimary};
     border: ${borderSizeLarge} solid ${colorPrimary};
@@ -53,7 +65,9 @@ const RecordingControl = styled.div`
     }
   `}
 
-  ${({ recording }) => !recording && `
+  ${({ recording }) =>
+    !recording &&
+    `
     padding: 7px;
     border: ${borderSizeSmall} solid ${colorWhite};
 
@@ -70,7 +84,7 @@ const PresentationTitle = styled.div`
   flex-direction: column;
   justify-content: center;
   font-weight: 200;
-  color: ${colorWhite};
+  color: black;
   font-size: ${fontSizeBase};
   padding: 0;
   margin-right: 0;
@@ -79,7 +93,7 @@ const PresentationTitle = styled.div`
   text-overflow: ellipsis;
   max-width: 30vw;
 
-  [dir="rtl"]  & {
+  [dir="rtl"] & {
     margin-left: 0;
     margin-right: ${smPaddingX};
   }
@@ -97,8 +111,11 @@ const VisuallyHidden = styled.span`
   position: absolute;
   overflow: hidden;
   clip: rect(0 0 0 0);
-  height: 1px; width: 1px;
-  margin: -1px; padding: 0; border: 0;
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
 `;
 
 const PresentationTitleSeparator = styled.span`

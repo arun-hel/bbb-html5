@@ -3,25 +3,39 @@ import CaptionsButtonContainer from "/imports/ui/components/captions/button/cont
 import withShortcutHelper from "/imports/ui/components/shortcut-help/service";
 import Styled from "./styles";
 import { PANELS, ACTIONS } from "../layout/enums";
-import ActionsDropdown from "./actions-dropdown/container";
+import ActionsDropdownContainer from "./actions-dropdown/container";
 import ScreenshareButtonContainer from "/imports/ui/components/actions-bar/screenshare/container";
 import AudioControlsContainer from "../audio/audio-controls/container";
 import JoinVideoOptionsContainer from "../video-provider/video-button/container";
 import PresentationOptionsContainer from "./presentation-options/component";
 const CHAT_CONFIG = Meteor.settings.public.chat;
 const PUBLIC_CHAT_ID = CHAT_CONFIG.public_id;
+import Auth from "/imports/ui/services/auth";
 
 class ActionsBar extends PureComponent {
   state = {
     isChatOpened: false,
     isUserListOpned: false,
+    time: new Date(),
+    interval: null,
   };
+
+  setTime() {
+    this.setState({
+      time: new Date(),
+    });
+  }
 
   componentDidMount() {
     this.state = {
       isChatOpened: this.props.isChatOpened,
       isUserListOpned: this.props.isUserListOpned,
     };
+    this.interval = setInterval(() => this.setTime(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   componentDidUpdate(prevState) {
@@ -167,7 +181,40 @@ class ActionsBar extends PureComponent {
         }}
       >
         <Styled.Left>
-          <ActionsDropdown
+          <Styled.Me>
+            <span
+              style={{
+                lineHeight: "1.5rem",
+                fontSize: "1.2rem",
+                fontWeight: 500,
+              }}
+            >{`${this.state.time.toLocaleString("en-US", {
+              hour: "numeric",
+              minute: "numeric",
+              hour12: true,
+            })} | `}</span>
+            <span
+              style={{
+                lineHeight: "1.5rem",
+                fontSize: "1.2rem",
+                fontWeight: 500,
+              }}
+            >
+              {Auth.fullname}
+            </span>
+          </Styled.Me>
+        </Styled.Left>
+
+        <Styled.Center>
+          <AudioControlsContainer />
+          {enableVideo ? <JoinVideoOptionsContainer /> : null}
+          <ScreenshareButtonContainer
+            {...{
+              amIPresenter,
+              isMeteorConnected,
+            }}
+          />
+          <ActionsDropdownContainer
             {...{
               amIPresenter,
               amIModerator,
@@ -182,21 +229,8 @@ class ActionsBar extends PureComponent {
               handleUserListState,
             }}
           />
-          {isCaptionsAvailable ? (
-            <CaptionsButtonContainer {...{ intl }} />
-          ) : null}
-        </Styled.Left>
-
-        <Styled.Center>
-          <AudioControlsContainer />
-          {enableVideo ? <JoinVideoOptionsContainer /> : null}
-          <ScreenshareButtonContainer
-            {...{
-              amIPresenter,
-              isMeteorConnected,
-            }}
-          />
         </Styled.Center>
+        {isCaptionsAvailable ? <CaptionsButtonContainer {...{ intl }} /> : null}
         <Styled.Right>
           {/* {!isOldMinimizeButtonEnabled ||
           (isOldMinimizeButtonEnabled &&

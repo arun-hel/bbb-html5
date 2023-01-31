@@ -206,15 +206,16 @@ class SettingsDropdown extends PureComponent {
 
     this.getFullscreenItem(this.menuItems);
 
-    this.menuItems.push(
-      {
-        key: "list-item-settings",
-        icon: "settings",
-        dataTest: "settings",
-        label: intl.formatMessage(intlMessages.settingsLabel),
-        // description: intl.formatMessage(intlMessages.settingsDesc),
-        onClick: () => mountModal(<SettingsMenuContainer />),
-      }
+    this.menuItems
+      .push
+      // {
+      //   key: "list-item-settings",
+      //   icon: "fa-gear",
+      //   dataTest: "settings",
+      //   label: intl.formatMessage(intlMessages.settingsLabel),
+      //   // description: intl.formatMessage(intlMessages.settingsDesc),
+      //   onClick: () => mountModal(<SettingsMenuContainer />),
+      // }
 
       // Remove the about button for now
       // {
@@ -224,7 +225,7 @@ class SettingsDropdown extends PureComponent {
       //   // description: intl.formatMessage(intlMessages.aboutDesc),
       //   onClick: () => mountModal(<AboutContainer />),
       // },
-    );
+      ();
 
     if (helpButton) {
       // Remove Help Button

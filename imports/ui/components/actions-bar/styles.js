@@ -15,11 +15,16 @@ import Button from "/imports/ui/components/common/button/component";
 const ActionsBar = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  @media ${smallOnly} {
+    justify-content: center;
+  }
 `;
 
 const Left = styled.div`
-  display: inherit;
-  flex: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 
   > * {
     margin: 0 ${smPaddingX};
@@ -41,12 +46,15 @@ const Left = styled.div`
   }
 `;
 
+const Me = styled.div`
+  @media ${smallOnly} {
+    display: none;
+  }
+`;
+
 const Center = styled.div`
   display: flex;
   flex-direction: row;
-  flex: 1;
-  justify-content: center;
-
   > * {
     margin: 0 ${smPaddingX};
 
@@ -59,18 +67,9 @@ const Center = styled.div`
 const Right = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  position: relative;
-
-  [dir="rtl"] & {
-    right: auto;
-    left: ${smPaddingX};
-  }
-
   @media ${smallOnly} {
     right: 0;
     left: 0;
-    display: contents;
   }
 
   > * {
@@ -166,4 +165,5 @@ export default {
   RaiseHandButton,
   ChatBtn,
   UserlstBtn,
+  Me,
 };

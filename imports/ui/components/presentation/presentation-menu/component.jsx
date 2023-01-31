@@ -1,57 +1,58 @@
-import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { defineMessages, injectIntl } from 'react-intl';
-import { toPng } from 'html-to-image';
-import { toast } from 'react-toastify';
-import logger from '/imports/startup/client/logger';
-import Styled from './styles';
+import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
+import { defineMessages, injectIntl } from "react-intl";
+import { toPng } from "html-to-image";
+import { toast } from "react-toastify";
+import logger from "/imports/startup/client/logger";
+import Styled from "./styles";
 import BBBMenu from "/imports/ui/components/common/menu/component";
-import TooltipContainer from '/imports/ui/components/common/tooltip/container';
-import { ACTIONS } from '/imports/ui/components/layout/enums';
-import browserInfo from '/imports/utils/browserInfo';
+import TooltipContainer from "/imports/ui/components/common/tooltip/container";
+import { ACTIONS } from "/imports/ui/components/layout/enums";
+import browserInfo from "/imports/utils/browserInfo";
 
-const OLD_MINIMIZE_BUTTON_ENABLED = Meteor.settings.public.presentation.oldMinimizeButton;
+const OLD_MINIMIZE_BUTTON_ENABLED =
+  Meteor.settings.public.presentation.oldMinimizeButton;
 
 const intlMessages = defineMessages({
   downloading: {
-    id: 'app.presentation.options.downloading',
-    description: 'Downloading label',
-    defaultMessage: 'Downloading...',
+    id: "app.presentation.options.downloading",
+    description: "Downloading label",
+    defaultMessage: "Downloading...",
   },
   downloaded: {
-    id: 'app.presentation.options.downloaded',
-    description: 'Downloaded label',
-    defaultMessage: 'Current presentation was downloaded',
+    id: "app.presentation.options.downloaded",
+    description: "Downloaded label",
+    defaultMessage: "Current presentation was downloaded",
   },
   downloadFailed: {
-    id: 'app.presentation.options.downloadFailed',
-    description: 'Downloaded failed label',
-    defaultMessage: 'Could not download current presentation',
+    id: "app.presentation.options.downloadFailed",
+    description: "Downloaded failed label",
+    defaultMessage: "Could not download current presentation",
   },
   fullscreenLabel: {
-    id: 'app.presentation.options.fullscreen',
-    description: 'Fullscreen label',
-    defaultMessage: 'Fullscreen',
+    id: "app.presentation.options.fullscreen",
+    description: "Fullscreen label",
+    defaultMessage: "Fullscreen",
   },
   exitFullscreenLabel: {
-    id: 'app.presentation.options.exitFullscreen',
-    description: 'Exit fullscreen label',
-    defaultMessage: 'Exit fullscreen',
+    id: "app.presentation.options.exitFullscreen",
+    description: "Exit fullscreen label",
+    defaultMessage: "Exit fullscreen",
   },
   minimizePresentationLabel: {
-    id: 'app.presentation.options.minimize',
-    description: 'Minimize presentation label',
-    defaultMessage: 'Minimize',
+    id: "app.presentation.options.minimize",
+    description: "Minimize presentation label",
+    defaultMessage: "Minimize",
   },
   optionsLabel: {
-    id: 'app.navBar.settingsDropdown.optionsLabel',
-    description: 'Options button label',
-    defaultMessage: 'Options',
+    id: "app.navBar.settingsDropdown.optionsLabel",
+    description: "Options button label",
+    defaultMessage: "Options",
   },
   snapshotLabel: {
-    id: 'app.presentation.options.snapshot',
-    description: 'Snapshot of current slide label',
-    defaultMessage: 'Snapshot of current slide',
+    id: "app.presentation.options.snapshot",
+    description: "Snapshot of current slide label",
+    defaultMessage: "Snapshot of current slide",
   },
 });
 
@@ -74,8 +75,8 @@ const defaultProps = {
   isDropdownOpen: false,
   isIphone: false,
   isFullscreen: false,
-  elementName: '',
-  meetingName: '',
+  elementName: "",
+  meetingName: "",
   fullscreenRef: null,
   screenshotRef: null,
 };
@@ -96,7 +97,7 @@ const PresentationMenu = (props) => {
     layoutContextDispatch,
     meetingName,
     isIphone,
-    isRTL
+    isRTL,
   } = props;
 
   const [state, setState] = useState({
@@ -108,24 +109,30 @@ const PresentationMenu = (props) => {
   const toastId = useRef(null);
   const dropdownRef = useRef(null);
 
-  const formattedLabel = (fullscreen) => (fullscreen
-    ? intl.formatMessage(intlMessages.exitFullscreenLabel)
-    : intl.formatMessage(intlMessages.fullscreenLabel)
-  );
+  const formattedLabel = (fullscreen) =>
+    fullscreen
+      ? intl.formatMessage(intlMessages.exitFullscreenLabel)
+      : intl.formatMessage(intlMessages.fullscreenLabel);
 
   function renderToastContent() {
     const { loading, hasError } = state;
 
-    let icon = loading ? 'blank' : 'check';
-    if (hasError) icon = 'circle_close';
+    let icon = loading ? "blank" : "check";
+    if (hasError) icon = "circle_close";
 
     return (
       <Styled.Line>
         <Styled.ToastText>
           <span>
-            {loading && !hasError && intl.formatMessage(intlMessages.downloading)}
-            {!loading && !hasError && intl.formatMessage(intlMessages.downloaded)}
-            {!loading && hasError && intl.formatMessage(intlMessages.downloadFailed)}
+            {loading &&
+              !hasError &&
+              intl.formatMessage(intlMessages.downloading)}
+            {!loading &&
+              !hasError &&
+              intl.formatMessage(intlMessages.downloaded)}
+            {!loading &&
+              hasError &&
+              intl.formatMessage(intlMessages.downloadFailed)}
           </span>
         </Styled.ToastText>
         <Styled.StatusIcon>
@@ -144,73 +151,69 @@ const PresentationMenu = (props) => {
     const menuItems = [];
 
     if (!isIphone) {
-      menuItems.push(
-        {
-          key: 'list-item-fullscreen',
-          dataTest: 'presentationFullscreen',
-          label: formattedLabel(isFullscreen),
-          onClick: () => {
-            handleToggleFullscreen(fullscreenRef);
-            const newElement = (elementId === currentElement) ? '' : elementId;
-            const newGroup = (elementGroup === currentGroup) ? '' : elementGroup;
+      menuItems.push({
+        key: "list-item-fullscreen",
+        dataTest: "presentationFullscreen",
+        label: formattedLabel(isFullscreen),
+        onClick: () => {
+          handleToggleFullscreen(fullscreenRef);
+          const newElement = elementId === currentElement ? "" : elementId;
+          const newGroup = elementGroup === currentGroup ? "" : elementGroup;
 
-            layoutContextDispatch({
-              type: ACTIONS.SET_FULLSCREEN_ELEMENT,
-              value: {
-                element: newElement,
-                group: newGroup,
-              },
-            });
-          },
+          layoutContextDispatch({
+            type: ACTIONS.SET_FULLSCREEN_ELEMENT,
+            value: {
+              element: newElement,
+              group: newGroup,
+            },
+          });
         },
-      );
+      });
     }
 
     if (OLD_MINIMIZE_BUTTON_ENABLED) {
-      menuItems.push(
-        {
-          key: 'list-item-minimize',
-          label: intl.formatMessage(intlMessages.minimizePresentationLabel),
-          onClick: () => {
-            toggleSwapLayout(layoutContextDispatch);
-          },
+      menuItems.push({
+        key: "list-item-minimize",
+        label: intl.formatMessage(intlMessages.minimizePresentationLabel),
+        onClick: () => {
+          toggleSwapLayout(layoutContextDispatch);
         },
-      );
+      });
     }
 
     const { isSafari } = browserInfo;
 
     if (!isSafari) {
-      menuItems.push(
-        {
-          key: 'list-item-screenshot',
-          label: intl.formatMessage(intlMessages.snapshotLabel),
-          dataTest: "presentationSnapshot",
-          onClick: () => {
-            setState({
-              loading: true,
-              hasError: false,
-            });
+      menuItems.push({
+        key: "list-item-screenshot",
+        label: intl.formatMessage(intlMessages.snapshotLabel),
+        dataTest: "presentationSnapshot",
+        onClick: () => {
+          setState({
+            loading: true,
+            hasError: false,
+          });
 
-            toastId.current = toast.info(renderToastContent(), {
-              hideProgressBar: true,
-              autoClose: false,
-              newestOnTop: true,
-              closeOnClick: true,
-              onClose: () => {
-                toastId.current = null;
-              },
-            });
+          toastId.current = toast.info(renderToastContent(), {
+            hideProgressBar: true,
+            autoClose: false,
+            newestOnTop: true,
+            closeOnClick: true,
+            onClose: () => {
+              toastId.current = null;
+            },
+          });
 
-            toPng(getScreenshotRef(), {
-              width: window.screen.width,
-              height: window.screen.height,
-            }).then((data) => {
-              const anchor = document.createElement('a');
+          toPng(getScreenshotRef(), {
+            width: window.screen.width,
+            height: window.screen.height,
+          })
+            .then((data) => {
+              const anchor = document.createElement("a");
               anchor.href = data;
               anchor.setAttribute(
-                'download',
-                `${elementName}_${meetingName}_${new Date().toISOString()}.png`,
+                "download",
+                `${elementName}_${meetingName}_${new Date().toISOString()}.png`
               );
               anchor.click();
 
@@ -218,9 +221,10 @@ const PresentationMenu = (props) => {
                 loading: false,
                 hasError: false,
               });
-            }).catch((error) => {
+            })
+            .catch((error) => {
               logger.warn({
-                logCode: 'presentation_snapshot_error',
+                logCode: "presentation_snapshot_error",
                 extraInfo: error,
               });
 
@@ -229,9 +233,8 @@ const PresentationMenu = (props) => {
                 hasError: true,
               });
             });
-          },
         },
-      );
+      });
     }
 
     return menuItems;
@@ -263,18 +266,20 @@ const PresentationMenu = (props) => {
 
   return (
     <Styled.Right>
-      <BBBMenu 
+      <BBBMenu
         trigger={
-          <TooltipContainer title={intl.formatMessage(intlMessages.optionsLabel)}>
+          <TooltipContainer
+            title={intl.formatMessage(intlMessages.optionsLabel)}
+          >
             <Styled.DropdownButton
-              state={isDropdownOpen ? 'open' : 'closed'}
+              state={isDropdownOpen ? "open" : "closed"}
               aria-label={intl.formatMessage(intlMessages.optionsLabel)}
               data-test="whiteboardOptionsButton"
               onClick={() => {
-                setIsDropdownOpen((isOpen) => !isOpen)
+                setIsDropdownOpen((isOpen) => !isOpen);
               }}
-              >
-                <Styled.ButtonIcon iconName="more" />
+            >
+              <Styled.ButtonIcon iconName="more" />
             </Styled.DropdownButton>
           </TooltipContainer>
         }
@@ -285,9 +290,15 @@ const PresentationMenu = (props) => {
           elevation: 3,
           getContentAnchorEl: null,
           fullwidth: "true",
-          anchorOrigin: { vertical: 'bottom', horizontal: isRTL ? 'right' : 'left' },
-          transformOrigin: { vertical: 'top', horizontal: isRTL ? 'right' : 'left' },
-          container: fullscreenRef
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: isRTL ? "right" : "left",
+          },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: isRTL ? "right" : "left",
+          },
+          container: fullscreenRef,
         }}
         actions={getAvailableOptions()}
       />
